@@ -31,6 +31,12 @@ public class UploadFile extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         exit = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        buscarArchivo = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        cargarArchivo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -48,6 +54,43 @@ public class UploadFile extends javax.swing.JFrame {
         });
         jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 40, -1));
 
+        jLabel1.setFont(new java.awt.Font("Palatino", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel1.setText("CARGAR ARCHIVO");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
+
+        jTextField1.setBackground(new java.awt.Color(204, 204, 204));
+        jTextField1.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 340, -1));
+
+        buscarArchivo.setBackground(new java.awt.Color(204, 204, 204));
+        buscarArchivo.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        buscarArchivo.setText("Buscar archivo");
+        buscarArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarArchivoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buscarArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, -1, -1));
+
+        jTextArea1.setBackground(new java.awt.Color(204, 204, 204));
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 340, 220));
+
+        cargarArchivo.setBackground(new java.awt.Color(204, 204, 204));
+        cargarArchivo.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        cargarArchivo.setText("Cargar");
+        cargarArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cargarArchivoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cargarArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 340, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 400));
 
         pack();
@@ -56,6 +99,15 @@ public class UploadFile extends javax.swing.JFrame {
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         dispose();
     }//GEN-LAST:event_exitActionPerformed
+
+    private void buscarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarArchivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buscarArchivoActionPerformed
+
+    private void cargarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarArchivoActionPerformed
+        Menu menu = new Menu();
+        this.dispose();
+    }//GEN-LAST:event_cargarArchivoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -93,7 +145,13 @@ public class UploadFile extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buscarArchivo;
+    private javax.swing.JButton cargarArchivo;
     private javax.swing.JButton exit;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
