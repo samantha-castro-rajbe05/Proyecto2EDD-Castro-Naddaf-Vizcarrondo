@@ -8,9 +8,9 @@ package EDD;
  *
  * @author samantha
  */
-public class Nodo {
+public class Nodo { //PONER LO DE LA T
     
-    private Nodo pNext;
+   private Nodo pNext;
    private Object dato;
 
    /**
