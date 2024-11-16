@@ -6,8 +6,17 @@ package EDD;
 
 /**
  *
- * @author samantha
+ * @author PeterNaddaf
  */
-public class Tree {
+public class NodoLista<T> {
+    T info;
+    NodoLista<T> pNext;
+    
+    public NodoLista(T info){
+        this.info= info;
+        this.pNext=null;
+    }
+    
     
 }
+
