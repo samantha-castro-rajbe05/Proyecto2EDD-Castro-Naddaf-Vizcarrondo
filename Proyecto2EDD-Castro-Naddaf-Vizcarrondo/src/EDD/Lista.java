@@ -3,15 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package EDD;
-
+import java.util.Iterator;
 /**
  *
  * @author samantha
  */
-public class Lista {
+public class Lista<T> implements Iterable<T> {
     
-    private Nodo pFirst;
+    private NodoLista<T> pFirst;
     private int size;
+    
+    
 
     /**
      * Constructor que inicializa la lista
@@ -25,14 +27,14 @@ public class Lista {
      * Obtiene el primer nodo de la lista.
      * @return El primer nodo.
      */
-    public Nodo getpFirst() {
+    public NodoLista getpFirst() {
         return pFirst;
     }
 /**
  * Establece el nodo1 de la lista.
  * @param pFirst El nuevo nodo1.
  */
-    public void setpFirst(Nodo pFirst) {
+    public void setpFirst(NodoLista pFirst) {
         this.pFirst = pFirst;
     }
 /**
@@ -49,4 +51,49 @@ public class Lista {
     public void setSize(int size) {
         this.size = size;
     }
+    
+    public void Agregar(T info){
+        NodoLista<T> nuevonodo = new NodoLista<>(info);
+        if(pFirst==null)
+            pFirst= nuevonodo;
+        else{
+            NodoLista<T> actual = pFirst;
+            while(actual.pNext!= null){
+                actual = actual.pNext;
+                
+            }
+            actual.pNext=nuevonodo;
+        }
+        size++;
+        
+        
+    }
+    public T obtener(int indice){
+        if(indice<0||indice>=size)
+            throw new IndexOutOfBoundsException("Indice fuera de rango");
+        NodoLista<T> actual = pFirst;
+        for (int i = 0; i < indice; i++) {
+            actual = actual.pNext;
+        }
+        return actual.info;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new IteradorLista();
+    }
+    private class IteradorLista implements Iterator<T>{
+
+        @Override
+        public boolean hasNext() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        public T next() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+        
+    }
+    
 }
