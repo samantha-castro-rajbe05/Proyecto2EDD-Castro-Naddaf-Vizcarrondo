@@ -6,8 +6,9 @@ package Functions;
 
 /**
  *
- * @author samantha
+ * @author PeterNaddaf
  */
-public class Upload {
+public abstract class CriterioBusqueda<T> {
+    public abstract boolean cumple(T elemento);
     
 }

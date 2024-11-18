@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package EDD;
-
+import java.util.Iterator;
 /**
  *
  * @author samantha
  */
-public class Lista<T> {
+public class Lista<T> implements Iterable<T> {
     
     private NodoLista<T> pFirst;
     private int size;
@@ -77,4 +77,23 @@ public class Lista<T> {
         }
         return actual.info;
     }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new IteradorLista();
+    }
+    private class IteradorLista implements Iterator<T>{
+
+        @Override
+        public boolean hasNext() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        public T next() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+        
+    }
+    
 }

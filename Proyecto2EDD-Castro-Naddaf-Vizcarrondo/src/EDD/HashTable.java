@@ -66,6 +66,18 @@ public class HashTable<K,V> {
         }
         return null;
     }
+    public Lista<V> obtenerValores(){
+        Lista<V> valores = new Lista<>();
+        for (int i = 0; i < capacidad; i++) {
+            Entrada<K,V> actual = tabla[i];
+            while(actual!= null){
+                valores.Agregar(actual.valor);
+                actual = actual.pNext;
+            }
+            
+        }
+        return valores;
+    }
     
     
 }

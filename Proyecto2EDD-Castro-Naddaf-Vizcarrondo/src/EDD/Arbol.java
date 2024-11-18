@@ -4,6 +4,8 @@
  */
 package EDD;
 
+import Functions.CriterioBusqueda;
+
 /**
  *
  * @author samantha
