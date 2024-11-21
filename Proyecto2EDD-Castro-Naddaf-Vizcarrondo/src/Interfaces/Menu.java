@@ -75,16 +75,31 @@ public class Menu extends javax.swing.JFrame {
         buscarPorMote.setBackground(new java.awt.Color(204, 204, 204));
         buscarPorMote.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
         buscarPorMote.setText("Buscar por mote");
+        buscarPorMote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarPorMoteActionPerformed(evt);
+            }
+        });
         jPanel1.add(buscarPorMote, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, -1, -1));
 
         buscarPorTitulo.setBackground(new java.awt.Color(204, 204, 204));
         buscarPorTitulo.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
         buscarPorTitulo.setText("Buscar por título");
+        buscarPorTitulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarPorTituloActionPerformed(evt);
+            }
+        });
         jPanel1.add(buscarPorTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, -1, -1));
 
         cargarArchivo.setBackground(new java.awt.Color(204, 204, 204));
         cargarArchivo.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
         cargarArchivo.setText("Cargar archivo");
+        cargarArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cargarArchivoActionPerformed(evt);
+            }
+        });
         jPanel1.add(cargarArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, -1, -1));
 
         mostrarArbol.setBackground(new java.awt.Color(204, 204, 204));
@@ -131,7 +146,8 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_exitActionPerformed
 
     private void buscarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarPorNombreActionPerformed
-        // TODO add your handling code here:
+        BuscarPorNombre buscarPorNombre = new BuscarPorNombre();
+        this.dispose();
     }//GEN-LAST:event_buscarPorNombreActionPerformed
 
     private void mostrarArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarArbolActionPerformed
@@ -139,12 +155,32 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_mostrarArbolActionPerformed
 
     private void mostrarAntepasadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarAntepasadosActionPerformed
-        // TODO add your handling code here:
+        MostrarAntepasados mostrarAntepasados = new MostrarAntepasados();
+        this.dispose();
     }//GEN-LAST:event_mostrarAntepasadosActionPerformed
 
     private void listaGeneracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaGeneracionActionPerformed
-        // TODO add your handling code here:
+        Contemporaneos contemporaneos = new Contemporaneos();
+        this.dispose();
     }//GEN-LAST:event_listaGeneracionActionPerformed
+
+    private void cargarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarArchivoActionPerformed
+
+        //abrimos ventana cargar
+        UploadFile cargarRed = new UploadFile();
+        //cerramos esta ventana
+        this.dispose();
+    }//GEN-LAST:event_cargarArchivoActionPerformed
+
+    private void buscarPorTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarPorTituloActionPerformed
+        BuscarPorTitulo buscarPorTitulo = new BuscarPorTitulo();
+        this.dispose();
+    }//GEN-LAST:event_buscarPorTituloActionPerformed
+
+    private void buscarPorMoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarPorMoteActionPerformed
+        BuscarPorMote buscarPorMote = new BuscarPorMote();
+        this.dispose();
+    }//GEN-LAST:event_buscarPorMoteActionPerformed
 
     /**
      * @param args the command line arguments

@@ -76,6 +76,11 @@ public class UploadFile extends javax.swing.JFrame {
 
         ruta.setBackground(new java.awt.Color(204, 204, 204));
         ruta.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        ruta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rutaActionPerformed(evt);
+            }
+        });
         jPanel1.add(ruta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 340, -1));
 
         cargarArchivo.setBackground(new java.awt.Color(204, 204, 204));
@@ -178,6 +183,10 @@ public class UploadFile extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_cargarArchivoActionPerformed
+
+    private void rutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rutaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rutaActionPerformed
 
     /**
      * @param args the command line arguments
