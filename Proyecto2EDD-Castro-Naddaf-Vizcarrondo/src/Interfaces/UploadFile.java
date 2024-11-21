@@ -16,6 +16,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author samantha
  */
 public class UploadFile extends javax.swing.JFrame {
+    private javax.swing.JButton cargarArchivoActionPerformed;
+    private javax.swing.JButton buscarArchivoActionPerformed;
+    private javax.swing.JButton exitActionPerformed;
+    
 
     
     /**
