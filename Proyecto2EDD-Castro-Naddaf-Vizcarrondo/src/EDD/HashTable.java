@@ -4,6 +4,8 @@
  */
 package EDD;
 
+import Persona.Persona;
+
 /**
  *
  * @author samantha
@@ -79,5 +81,17 @@ public class HashTable<K,V> {
         return valores;
     }
     
+    //public String buscarNombre(String nombre){
+        //validar si el nombre no esta en la lista de nombres, si no esta que salga un mensaje de error
+        //recorrer arbol
+        //agarrar los keys (nombres)
+        //del value agarrar el value de la clave "of his name" (vamos a ponerle value3)
+        //imprimir un numero + ". " + nombre + ". " value3 + "of his name"
+        
+       //Lista listaNombres = new Lista();
+        
+        //if (nombre
+        
+    //}
     
 }
