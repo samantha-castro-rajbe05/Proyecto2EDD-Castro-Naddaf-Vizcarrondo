@@ -21,14 +21,21 @@ import java.util.Map;
 public class Cargar {
     private Arbol<Persona> arbolGenealogico;
     private HashTable<String, Persona> tablaPersonas;
+    private Linaje linaje;
 
     public Cargar() {
         tablaPersonas = new HashTable<>(100);
     }
+    
+    public Linaje getLinaje(){
+        return linaje;
+    }
 
     public void cargarArchivoJSON(String rutaArchivo) {
         try {
+            //Utilizamos Gson, una biblioteca para trabajar con JSON, para convertir el contenido del archivo en objetos Java.
             Gson gson = new Gson();
+            //Creamos un FileReader para leer el archivo especificado por rutaArchivo.
             FileReader reader = new FileReader(rutaArchivo);
 
             // Leemos el JSON como un objeto genérico
@@ -37,6 +44,7 @@ public class Cargar {
             // Obtenemos el linaje (casa)
             for (Map.Entry<String, JsonElement> entradaLinaje : jsonObject.entrySet()) {
                 String nombreLinaje = entradaLinaje.getKey();
+                linaje = new Linaje(nombreLinaje);
                 JsonElement miembrosLinaje = entradaLinaje.getValue();
 
                 // Procesamos la lista de miembros del linaje
@@ -144,6 +152,9 @@ public class Cargar {
         construirArbolRecursivo(nodoRaiz);
     }
 
+    //Este método toma el nodo actual y busca sus hijos en la tabla hash.
+    //Si encuentra un hijo, crea un nuevo nodo para él y llama recursivamente 
+    //al mismo método para agregar los descendientes de ese hijo.
     private void construirArbolRecursivo(NodoArbol<Persona> nodoActual) {
         Persona personaActual = nodoActual.getInfo();
         for (String nombreHijo : personaActual.getHijos()) {
@@ -167,4 +178,6 @@ public class Cargar {
     public HashTable<String, Persona> getTablaPersonas() {
         return tablaPersonas;
     }
+    
+       
 }
