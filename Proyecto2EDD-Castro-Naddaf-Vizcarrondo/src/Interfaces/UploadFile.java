@@ -7,6 +7,9 @@ package Interfaces;
 import Functions.Cargar;
 import Functions.Linaje;
 import Interfaces.Menu;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -16,9 +19,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author samantha
  */
 public class UploadFile extends javax.swing.JFrame {
-    private javax.swing.JButton cargarArchivoActionPerformed;
-    private javax.swing.JButton buscarArchivoActionPerformed;
-    private javax.swing.JButton exitActionPerformed;
+    //private javax.swing.JButton cargarArchivoActionPerformed;
+    //private javax.swing.JButton buscarArchivoActionPerformed;
+    //private javax.swing.JButton exitActionPerformed;
     
 
     
@@ -151,7 +154,7 @@ public class UploadFile extends javax.swing.JFrame {
             }else {//si el usuario no seleccionó ningún archivo mostramos mensaje de error
                 JOptionPane.showMessageDialog(this, "No se ha seleccionado ningún archivo");
             }
-        }
+        
     }//GEN-LAST:event_buscarArchivoActionPerformed
 
     private void cargarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarArchivoActionPerformed
@@ -205,7 +208,7 @@ public class UploadFile extends javax.swing.JFrame {
 
     /* Create and display the form */
     java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run(() {
+        public void run() {
             new UploadFile().setVisible(true);
         }
     });
@@ -222,3 +225,4 @@ public class UploadFile extends javax.swing.JFrame {
     private javax.swing.JTextField ruta;
     // End of variables declaration//GEN-END:variables
 }
+
