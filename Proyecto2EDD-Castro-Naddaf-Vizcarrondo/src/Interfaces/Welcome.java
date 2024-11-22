@@ -82,6 +82,7 @@ public class Welcome extends javax.swing.JFrame {
 
     private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
         UploadFile uploadFile = new UploadFile();
+        
         this.dispose(); 
     }//GEN-LAST:event_startActionPerformed
 
