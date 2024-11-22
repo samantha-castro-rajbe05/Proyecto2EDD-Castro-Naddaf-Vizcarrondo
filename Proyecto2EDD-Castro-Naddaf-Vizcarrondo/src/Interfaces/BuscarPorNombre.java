@@ -141,7 +141,7 @@ public class BuscarPorNombre extends javax.swing.JFrame {
 
     private void buscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarNombreActionPerformed
        Cargar cargar = new Cargar();
-        System.out.println(cargar.getTablaPersonas()); //PROBARRRR
+       System.out.println(cargar.getTablaPersonas()); //PROBARRRR
         
     }//GEN-LAST:event_buscarNombreActionPerformed
 
