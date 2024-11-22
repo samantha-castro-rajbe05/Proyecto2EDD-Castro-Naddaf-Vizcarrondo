@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Functions;
-
 import EDD.Arbol;
 import EDD.HashTable;
 import EDD.Lista;
@@ -13,72 +12,117 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
-
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Map;
 
-public class Cargar {
+
+  public class Cargar {
     private Arbol<Persona> arbolGenealogico;
     private HashTable<String, Persona> tablaPersonas;
     private String nombreLinaje;
+    private Lista personas;
 
     public Cargar() {
-        tablaPersonas = new HashTable<>(200); // Ajusta la capacidad según sea necesario
+        this.personas = new Lista();
+//        tablaPersonas = new HashTable<>(200); // Ajusta la capacidad según sea necesario
     }
 
     public void cargar(String rutaArchivo) {
-        try {
+        
+         try {
+            // Leer el archivo JSON usando Gson
             Gson gson = new Gson();
-            FileReader reader = new FileReader(rutaArchivo);
+            JsonObject diccionario = gson.fromJson(new FileReader(rutaArchivo), JsonObject.class);
 
-            // Leemos el JSON como un objeto genérico
-            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+            // Obtener los nombres de las redes de transporte (claves principales)
+            Lista linaje = obtenerClavesDeJsonObject(diccionario);
 
-            // Obtenemos el linaje (casa)
-            for (Map.Entry<String, JsonElement> entradaLinaje : jsonObject.entrySet()) {
-                nombreLinaje = entradaLinaje.getKey();
-                JsonArray miembrosLinaje = entradaLinaje.getValue().getAsJsonArray();
+            // Iterar sobre cada primera clave, el nombre del linaje
+            for (int i = 0; i < linaje.getTamaño(); i++) {
+                String nombreLinaje = (String) linaje.getValor(i);
+                JsonElement redElement = diccionario.get(nombreLinaje);
 
-                // Procesamos la lista de miembros del linaje
-                for (JsonElement miembroElement : miembrosLinaje) {
-                    // Cada miembro es un objeto con un solo campo: el nombre de la persona
-                    JsonObject miembroObject = miembroElement.getAsJsonObject();
-                    for (Map.Entry<String, JsonElement> entradaMiembro : miembroObject.entrySet()) {
-                        String nombrePersona = entradaMiembro.getKey();
-                        JsonArray atributosPersona = entradaMiembro.getValue().getAsJsonArray();
-
-                        // Creamos la persona
-                        Persona persona = new Persona(nombrePersona);
-
-                        // Procesamos los atributos de la persona
-                        for (JsonElement atributoElement : atributosPersona) {
-                            JsonObject atributoObject = atributoElement.getAsJsonObject();
-                            for (Map.Entry<String, JsonElement> entradaAtributo : atributoObject.entrySet()) {
-                                String claveAtributo = entradaAtributo.getKey();
-                                JsonElement valorAtributo = entradaAtributo.getValue();
-
-                                // Procesamos cada atributo
-                                procesarAtributoPersona(persona, claveAtributo, valorAtributo);
-                            }
+                // Verificamos si es un objeto o un arreglo y lo manejamos adecuadamente
+                if (redElement.isJsonObject()) {
+                    JsonObject lineasObject = redElement.getAsJsonObject();
+                    procesarEstaciones(lineasObject);
+                } else if (redElement.isJsonArray()) {
+                    JsonArray lineasArray = redElement.getAsJsonArray();
+                    for (JsonElement elementoLinea : lineasArray) {
+                        if (elementoLinea.isJsonObject()) {
+                            JsonObject lineaObject = elementoLinea.getAsJsonObject();
+                            procesarEstaciones(lineaObject);  // Procesar cada objeto de línea
                         }
-
-                        // Agregamos la persona a la tabla hash usando una clave única
-                        String clavePersona = generarClaveUnica(persona);
-                        tablaPersonas.agregar(clavePersona, persona);
                     }
                 }
             }
 
-            // Después de cargar todas las personas, construimos el árbol genealógico
-            construirArbolGenealogico();
-
-            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+        
+    
+//        try {
+//            Gson gson = new Gson();
+//            FileReader reader = new FileReader(rutaArchivo);
+//
+//            // Leemos el JSON como un objeto genérico
+//            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+//
+//            // Obtenemos el linaje (casa)
+//            for (Map.Entry<String, JsonElement> entradaLinaje : jsonObject.entrySet()) {
+//                nombreLinaje = entradaLinaje.getKey();
+//                JsonArray miembrosLinaje = entradaLinaje.getValue().getAsJsonArray();
+//
+//                // Procesamos la lista de miembros del linaje
+//                for (JsonElement miembroElement : miembrosLinaje) {
+//                    // Cada miembro es un objeto con un solo campo: el nombre de la persona
+//                    JsonObject miembroObject = miembroElement.getAsJsonObject();
+//                    for (Map.Entry<String, JsonElement> entradaMiembro : miembroObject.entrySet()) {
+//                        String nombrePersona = entradaMiembro.getKey();
+//                        JsonArray atributosPersona = entradaMiembro.getValue().getAsJsonArray();
+//
+//                        // Creamos la persona
+//                        Persona persona = new Persona(nombrePersona);
+//
+//                        // Procesamos los atributos de la persona
+//                        for (JsonElement atributoElement : atributosPersona) {
+//                            JsonObject atributoObject = atributoElement.getAsJsonObject();
+//                            for (Map.Entry<String, JsonElement> entradaAtributo : atributoObject.entrySet()) {
+//                                String claveAtributo = entradaAtributo.getKey();
+//                                JsonElement valorAtributo = entradaAtributo.getValue();
+//
+//                                // Procesamos cada atributo
+//                                procesarAtributoPersona(persona, claveAtributo, valorAtributo);
+//                            }
+//                        }
+//
+//                        // Agregamos la persona a la tabla hash usando una clave única
+//                        String clavePersona = generarClaveUnica(persona);
+//                        tablaPersonas.agregar(clavePersona, persona);
+//                    }
+//                }
+//            }
+//
+//            // Después de cargar todas las personas, construimos el árbol genealógico
+//            construirArbolGenealogico();
+//
+//            reader.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    private Lista obtenerClavesDeJsonObject(JsonObject jsonObject) {
+        Lista listaClaves = new Lista();
+        for (String key : jsonObject.keySet()) {
+            listaClaves.insertFinale(key);
+        }
+        return listaClaves;
+    }
+    
     private void procesarAtributoPersona(Persona persona, String clave, JsonElement valor) {
         switch (clave) {
             case "Of his name":
