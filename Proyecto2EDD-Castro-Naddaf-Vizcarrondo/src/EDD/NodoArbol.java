@@ -12,63 +12,42 @@ import java.util.ArrayList;
 
 
 
-/**
- *
- * @author samantha
- */
 public class NodoArbol<T> {
-    
-   private T info;
-   private NodoArbol<T> padre;
-   private Lista<NodoArbol<T>> hijos;
-   
+    private T data;
+    private NodoArbol<T> padre;
+    private Lista<NodoArbol<T>> hijos;
 
-   /**
-    * Crea un nuevo nodo con el dato
-    * @param info Elemento que almacena el nodo
-    */
-    public NodoArbol(T info) {
+    public NodoArbol(T data) {
+        this.data = data;
         this.hijos = new Lista<>();
-        this.info = info;
     }
-/**
- * Regresa lo que se almacena en el nodo.
- * @return Elemento que almacena dato
- */
-    //métodos getters y setters
-    public T getInfo() {
-        return info;
+
+    public T getData() {
+        return data;
     }
-/**
- * Define el dato que guarda el nodo
- * @param info El nuevo elemento a ser almacenado
- */
-    public void setDato(T info) {
-        this.info = info;
+
+    public void setData(T data) {
+        this.data = data;
     }
-/**
- * Regresa al padre en el arbol
- * @return Padre del nodo
- */
+
     public NodoArbol<T> getPadre() {
         return padre;
     }
-/**
- * Define el padre del nodo
- * @param padre Nuevo padre.
- */
+
     public void setPadre(NodoArbol<T> padre) {
         this.padre = padre;
     }
-    public Lista<NodoArbol<T>> getHijos(){
+
+    public Lista<NodoArbol<T>> getHijos() {
         return hijos;
     }
-    public void agregarHijo(NodoArbol<T> hijo){
+
+    public void agregarHijo(NodoArbol<T> hijo) {
         hijo.setPadre(this);
-        this.hijos.Agregar(hijo);
+        this.hijos.agregar(hijo);
     }
-    
-   
 }
+
+
 
 

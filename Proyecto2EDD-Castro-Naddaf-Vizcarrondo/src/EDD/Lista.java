@@ -8,92 +8,77 @@ import java.util.Iterator;
  *
  * @author samantha
  */
-public class Lista<T> implements Iterable<T> {
-    
-    private NodoLista<T> pFirst;
-    private int size;
-    
-    
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-    /**
-     * Constructor que inicializa la lista
-     */
-    public Lista() { //eliminamos los parametros
-        this.pFirst = null;
-        this.size = 0;
+public class Lista<T> implements Iterable<T> {
+    private NodoLista<T> cabeza;
+    private int tamaño;
+
+    public Lista() {
+        this.cabeza = null;
+        this.tamaño = 0;
     }
-//métodos getters y setters para los atributos pFirst y size
-    /**
-     * Obtiene el primer nodo de la lista.
-     * @return El primer nodo.
-     */
-    public NodoLista getpFirst() {
-        return pFirst;
-    }
-/**
- * Establece el nodo1 de la lista.
- * @param pFirst El nuevo nodo1.
- */
-    public void setpFirst(NodoLista pFirst) {
-        this.pFirst = pFirst;
-    }
-/**
- * Obtiene el tamaño de la lista
- * @return numero de elementos dentro de la lista
- */
-    public int getSize() {
-        return size;
-    }
-/**
- * Define tamaño de la lista
- * @param size nuevo tamaño de Lista.
- */
-    public void setSize(int size) {
-        this.size = size;
-    }
-    
-    public void Agregar(T info){
-        NodoLista<T> nuevonodo = new NodoLista<>(info);
-        if(pFirst==null)
-            pFirst= nuevonodo;
-        else{
-            NodoLista<T> actual = pFirst;
-            while(actual.pNext!= null){
-                actual = actual.pNext;
-                
+
+    public void agregar(T data) {
+        NodoLista<T> nuevoNodo = new NodoLista<>(data);
+        if (cabeza == null) {
+            cabeza = nuevoNodo;
+        } else {
+            NodoLista<T> actual = cabeza;
+            while (actual.siguiente != null) {
+                actual = actual.siguiente;
             }
-            actual.pNext=nuevonodo;
+            actual.siguiente = nuevoNodo;
         }
-        size++;
-        
-        
+        tamaño++;
     }
-    public T obtener(int indice){
-        if(indice<0||indice>=size)
-            throw new IndexOutOfBoundsException("Indice fuera de rango");
-        NodoLista<T> actual = pFirst;
-        for (int i = 0; i < indice; i++) {
-            actual = actual.pNext;
+
+    public int getTamaño() {
+        return tamaño;
+    }
+
+    public T obtener(int indice) {
+        if (indice < 0 || indice >= tamaño) {
+            throw new IndexOutOfBoundsException("Índice fuera de rango");
         }
-        return actual.info;
+        NodoLista<T> actual = cabeza;
+        for (int i = 0; i < indice; i++) {
+            actual = actual.siguiente;
+        }
+        return actual.data;
+    }
+
+    public boolean estaVacia() {
+        return tamaño == 0;
     }
 
     @Override
     public Iterator<T> iterator() {
         return new IteradorLista();
     }
-    private class IteradorLista implements Iterator<T>{
+
+    private class IteradorLista implements Iterator<T> {
+        private NodoLista<T> actual;
+
+        public IteradorLista() {
+            this.actual = cabeza;
+        }
 
         @Override
         public boolean hasNext() {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            return actual != null;
         }
 
         @Override
         public T next() {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            if (actual == null) {
+                throw new NoSuchElementException();
+            }
+            T data = actual.data;
+            actual = actual.siguiente;
+            return data;
         }
-        
     }
-    
 }
+

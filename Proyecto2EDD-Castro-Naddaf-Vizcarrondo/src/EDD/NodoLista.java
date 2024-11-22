@@ -9,14 +9,13 @@ package EDD;
  * @author PeterNaddaf
  */
 public class NodoLista<T> {
-    T info;
-    NodoLista<T> pNext;
-    
-    public NodoLista(T info){
-        this.info= info;
-        this.pNext=null;
+    T data;
+    NodoLista<T> siguiente;
+
+    public NodoLista(T data) {
+        this.data = data;
+        this.siguiente = null;
     }
-    
-    
 }
+
 

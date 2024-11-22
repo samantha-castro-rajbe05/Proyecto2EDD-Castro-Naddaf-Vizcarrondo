@@ -17,40 +17,17 @@ public class Arbol<T> {
         this.raiz = raiz;
     }
 
-    public void setRaiz(NodoArbol<T> raiz) {
-        this.raiz = raiz;
-    }
-    public NodoArbol<T> buscarNodoRecursivo(NodoArbol<T> actual, CriterioBusqueda<T> criterio){
-        if(actual==null)
-            return null;
-        if(criterio.cumple(actual.getInfo()))
-            return actual;
-        Lista<NodoArbol<T>> hijos = actual.getHijos();
-        int size = hijos.getSize();
-        for (int i = 0; i<size; i++) {
-            NodoArbol<T> hijo = hijos.obtener(i);
-            NodoArbol resultado = buscarNodoRecursivo(hijo,criterio);
-            if(resultado!=null)
-                return resultado;
-            
-        }
-        return null;
-    }
-            
-            
-    //Para buscar un nodo por un criterio
-    public NodoArbol<T> BuscarPorCriterio(CriterioBusqueda<T> criterio){
-        return buscarNodoRecursivo(raiz, criterio);
-    }
-
     public NodoArbol<T> getRaiz() {
         return raiz;
     }
-    
-    
-    
-        
+
+    public void setRaiz(NodoArbol<T> raiz) {
+        this.raiz = raiz;
     }
+
+    // Puedes agregar métodos adicionales si lo necesitas
+}
+
     
 
     

@@ -10,100 +10,89 @@ import Persona.Persona;
  *
  * @author samantha
  */
-public class HashTable<K,V> {
-    private class Entrada<K,V>{
+public class HashTable<K, V> {
+    private class Entrada<K, V> {
         K clave;
         V valor;
-        Entrada<K,V> pNext;
-        
-        public Entrada(K clave, V valor){
+        Entrada<K, V> siguiente;
+
+        public Entrada(K clave, V valor) {
             this.clave = clave;
             this.valor = valor;
-            this.pNext=null;
-            
+            this.siguiente = null;
         }
     }
-    private Entrada<K,V>[] tabla;
+
+    private Entrada<K, V>[] tabla;
     private int capacidad;
-    
+
     @SuppressWarnings("unchecked")
-    public HashTable(int capacidad){
+    public HashTable(int capacidad) {
         this.capacidad = capacidad;
         this.tabla = new Entrada[capacidad];
     }
-    private int obtenerIndiceHash(K clave){
-        int hashcode = clave.hashCode();
-        return Math.abs(hashcode)%capacidad;
-        
+
+    private int obtenerIndiceHash(K clave) {
+        int hashCode = clave.hashCode();
+        return Math.abs(hashCode) % capacidad;
     }
-    public void agregarHash(K clave, V valor){
+
+    public void agregar(K clave, V valor) {
         int indice = obtenerIndiceHash(clave);
-        Entrada<K,V> nuevaEntrada = new Entrada<>(clave,valor);
-        
-        if(tabla[indice]== null)
-            tabla[indice]=nuevaEntrada;
-        else{
-            Entrada<K,V> actual = tabla[indice];
-            while(actual.clave.equals(clave)){
-                if(actual.clave.equals(clave)){
-                    actual.valor= valor;
+        Entrada<K, V> nuevaEntrada = new Entrada<>(clave, valor);
+
+        if (tabla[indice] == null) {
+            tabla[indice] = nuevaEntrada;
+        } else {
+            Entrada<K, V> actual = tabla[indice];
+            while (actual != null) {
+                if (actual.clave.equals(clave)) {
+                    actual.valor = valor; // Actualiza el valor si la clave ya existe
                     return;
                 }
-                if(actual.pNext==null)
+                if (actual.siguiente == null) {
                     break;
-                actual = actual.pNext;
+                }
+                actual = actual.siguiente;
             }
-            actual.pNext = nuevaEntrada;
+            actual.siguiente = nuevaEntrada; // Manejo de colisiones por encadenamiento
         }
     }
-    public V obtenerHash(K clave){
+
+    public V obtener(K clave) {
         int indice = obtenerIndiceHash(clave);
-        Entrada<K,V> actual = tabla[indice];
-        
-        while(actual!= null){
-            if(actual.clave.equals(clave))
+        Entrada<K, V> actual = tabla[indice];
+
+        while (actual != null) {
+            if (actual.clave.equals(clave)) {
                 return actual.valor;
-            actual=actual.pNext;
-            
+            }
+            actual = actual.siguiente;
         }
-        return null;
+        return null; // Clave no encontrada
     }
-    public Lista<V> obtenerValores(){
+
+    public Lista<V> obtenerTodosLosValores() {
         Lista<V> valores = new Lista<>();
         for (int i = 0; i < capacidad; i++) {
-            Entrada<K,V> actual = tabla[i];
-            while(actual!= null){
-                valores.Agregar(actual.valor);
-                actual = actual.pNext;
+            Entrada<K, V> actual = tabla[i];
+            while (actual != null) {
+                valores.agregar(actual.valor);
+                actual = actual.siguiente;
             }
-            
         }
         return valores;
     }
-    public Lista<K> obtenerTodasLasClaves() {
-    Lista<K> claves = new Lista<>();
-    for (int i = 0; i < capacidad; i++) {
-        Entrada<K, V> actual = tabla[i];
-        while (actual != null) {
-            claves.Agregar(actual.clave);
-            actual = actual.pNext;
-        }
-    }
-    return claves;
-}
 
-    
-    //public String buscarNombre(String nombre){
-        //validar si el nombre no esta en la lista de nombres, si no esta que salga un mensaje de error
-        //recorrer arbol
-        //agarrar los keys (nombres)
-        //del value agarrar el value de la clave "of his name" (vamos a ponerle value3)
-        //imprimir un numero + ". " + nombre + ". " value3 + "of his name"
-        
-       //Lista listaNombres = new Lista();
-        
-        //if (nombre
-        
-    //}
-    
+    public Lista<K> obtenerTodasLasClaves() {
+        Lista<K> claves = new Lista<>();
+        for (int i = 0; i < capacidad; i++) {
+            Entrada<K, V> actual = tabla[i];
+            while (actual != null) {
+                claves.agregar(actual.clave);
+                actual = actual.siguiente;
+            }
+        }
+        return claves;
+    }
 }

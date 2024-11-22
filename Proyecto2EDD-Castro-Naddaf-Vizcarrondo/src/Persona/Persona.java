@@ -13,118 +13,107 @@ import EDD.Lista;
  */
 public class Persona {
     private String nombre;
-    private String numeroNombre;
-    private String mote;
+    private String numeroNombre; // Por ejemplo, "First", "Second"
+    private String mote; // Apodo o sobrenombre
     private String titulo;
+    private String conyuge;
     private String padre;
     private Lista<String> hijos;
     private String ojos;
     private String cabello;
     private Lista<String> notas;
-    private String destino;
-    private String conyuge;
-    
-    
-    public Persona(String nombre){
-        this.nombre=nombre;
-        this.hijos=new Lista<>();
-        
+    private String destino; // Destino o fate
+
+    // Constructor
+    public Persona(String nombre) {
+        this.nombre = nombre;
+        this.hijos = new Lista<>();
+        this.notas = new Lista<>();
     }
 
-    public String getNumeroNombre() {
-        return numeroNombre;
+    // Getters y Setters
+
+    public String getNombre() {
+        return nombre;
     }
 
     public void setNumeroNombre(String numeroNombre) {
         this.numeroNombre = numeroNombre;
     }
 
-    public String getConyuge() {
-        return conyuge;
-    }
-
-    public void setConyuge(String conyuge) {
-        this.conyuge = conyuge;
-    }
-    
-    
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getMote() {
-        return mote;
+    public String getNumeroNombre() {
+        return numeroNombre;
     }
 
     public void setMote(String mote) {
         this.mote = mote;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getMote() {
+        return mote;
     }
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
 
-    public String getPadre() {
-        return padre;
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setConyuge(String conyuge) {
+        this.conyuge = conyuge;
+    }
+
+    public String getConyuge() {
+        return conyuge;
     }
 
     public void setPadre(String padre) {
         this.padre = padre;
     }
 
+    public String getPadre() {
+        return padre;
+    }
+
     public Lista<String> getHijos() {
         return hijos;
     }
 
-    public void setHijos(Lista<String> hijos) {
-        this.hijos = hijos;
-    }
-
-    public String getOjos() {
-        return ojos;
+    public void agregarHijo(String hijo) {
+        this.hijos.agregar(hijo);
     }
 
     public void setOjos(String ojos) {
         this.ojos = ojos;
     }
 
-    public String getCabello() {
-        return cabello;
+    public String getOjos() {
+        return ojos;
     }
 
     public void setCabello(String cabello) {
         this.cabello = cabello;
     }
 
+    public String getCabello() {
+        return cabello;
+    }
+
     public Lista<String> getNotas() {
         return notas;
     }
 
-    public void setNotas(Lista<String> notas) {
-        this.notas = notas;
-    }
-
-    public String getDestino() {
-        return destino;
+    public void agregarNota(String nota) {
+        this.notas.agregar(nota);
     }
 
     public void setDestino(String destino) {
         this.destino = destino;
     }
-    
-    public void agregarHijo(String hijo){
-        this.hijos.Agregar(hijo);
+
+    public String getDestino() {
+        return destino;
     }
-    public void agregarNota(String nota){
-        this.notas.Agregar(nota);
-        }
 }

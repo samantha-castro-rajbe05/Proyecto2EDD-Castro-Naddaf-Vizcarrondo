@@ -24,15 +24,10 @@ public class Cargar {
     private String nombreLinaje;
 
     public Cargar() {
-        tablaPersonas = new HashTable<>(200); // Aumentamos la capacidad si es necesario
+        tablaPersonas = new HashTable<>(200); // Ajusta la capacidad según sea necesario
     }
 
-    public Cargar(String nombreLinaje) {
-        this.nombreLinaje = nombreLinaje;
-    }
-    
-
-    public void cargarArchivoJSON(String rutaArchivo) {
+    public void cargar(String rutaArchivo) {
         try {
             Gson gson = new Gson();
             FileReader reader = new FileReader(rutaArchivo);
@@ -70,7 +65,7 @@ public class Cargar {
 
                         // Agregamos la persona a la tabla hash usando una clave única
                         String clavePersona = generarClaveUnica(persona);
-                        tablaPersonas.agregarHash(clavePersona, persona);
+                        tablaPersonas.agregar(clavePersona, persona);
                     }
                 }
             }
@@ -136,7 +131,7 @@ public class Cargar {
     private void construirArbolGenealogico() {
         // Primero, identificamos a la persona sin padre (la raíz)
         Persona raizPersona = null;
-        Lista<Persona> listaPersonas = tablaPersonas.obtenerValores();
+        Lista<Persona> listaPersonas = tablaPersonas.obtenerTodosLosValores();
         for (Persona persona : listaPersonas) {
             if (persona.getPadre() == null) {
                 raizPersona = persona;
@@ -157,13 +152,13 @@ public class Cargar {
     }
 
     private void construirArbolRecursivo(NodoArbol<Persona> nodoActual) {
-        Persona personaActual = nodoActual.getInfo();
+        Persona personaActual = nodoActual.getData();
         Lista<String> nombresHijos = personaActual.getHijos();
 
         for (String nombreHijo : nombresHijos) {
             String claveHijo = buscarClavePersona(nombreHijo);
             if (claveHijo != null) {
-                Persona hijoPersona = tablaPersonas.obtenerHash(claveHijo);
+                Persona hijoPersona = tablaPersonas.obtener(claveHijo);
                 if (hijoPersona != null) {
                     NodoArbol<Persona> nodoHijo = new NodoArbol<>(hijoPersona);
                     nodoActual.agregarHijo(nodoHijo);
