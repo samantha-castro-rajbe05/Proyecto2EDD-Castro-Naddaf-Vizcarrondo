@@ -165,48 +165,48 @@ public class UploadFile extends javax.swing.JFrame {
     }//GEN-LAST:event_buscarArchivoActionPerformed
 
     private void cargarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarArchivoActionPerformed
-//        if (!archivo.getText().isEmpty()) {
-//            Cargar func = new Cargar();
-//            func.cargar(ruta.getText());
-//
-//            //print para ver si esta funcionando esta funcion
-//            //System.out.println(redApp.toString());
-//            JOptionPane.showMessageDialog(null, "Archivo cargado exitosamente");
-//            // Obtenemos el linaje cargado
-//            String linaje = func.getNombreLinaje();
-//
-//            // Imprimimos el linaje
-//            JOptionPane.showMessageDialog(null, linaje);
-//            Menu menu = new Menu();
-//            this.dispose();
-//
-//        } else {
-//            JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún archivo");
-//        }
+        if (!archivo.getText().isEmpty()) {
+            Cargar func = new Cargar();
+            func.cargar(ruta.getText());
+
+            //print para ver si esta funcionando esta funcion
+            //System.out.println(redApp.toString());
+            JOptionPane.showMessageDialog(null, "Archivo cargado exitosamente");
+            // Obtenemos el linaje cargado
+            String linaje = func.getNombreLinaje();
+
+            // Imprimimos el linaje
+            JOptionPane.showMessageDialog(null, linaje.toString());
+            Menu menu = new Menu();
+            this.dispose();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún archivo");
+        }
 
 
 
         // Dentro del ActionListener del botón "Cargar"
-JFileChooser fileChooser = new JFileChooser();
-int seleccion = fileChooser.showOpenDialog(null);
-if (seleccion == JFileChooser.APPROVE_OPTION) {
-    File archivoSeleccionado = fileChooser.getSelectedFile();
-    String rutaArchivo = archivoSeleccionado.getAbsolutePath();
-
-    // Crear instancia del gestor y cargar el archivo
-    Cargar gestor = new Cargar();
-    gestor.cargar(rutaArchivo);
-
-    // Obtener el árbol genealógico y el nombre del linaje
-    Arbol<Persona> arbol = gestor.getArbolGenealogico();
-    String nombreLinaje = gestor.getNombreLinaje();
-
-    // Mostrar el nombre del linaje en la interfaz
-    lblNombreLinaje.setNombreLinaje(nombreLinaje);//no entiendo esto
-    JOptionPane.showMessageDialog(null, nombreLinaje);
+//JFileChooser fileChooser = new JFileChooser();
+//int seleccion = fileChooser.showOpenDialog(null);
+//if (seleccion == JFileChooser.APPROVE_OPTION) {
+//    File archivoSeleccionado = fileChooser.getSelectedFile();
+//    String rutaArchivo = archivoSeleccionado.getAbsolutePath();
+//
+//    // Crear instancia del gestor y cargar el archivo
+//    Cargar gestor = new Cargar();
+//    gestor.cargar(rutaArchivo);
+//
+//    // Obtener el árbol genealógico y el nombre del linaje
+//    Arbol<Persona> arbol = gestor.getArbolGenealogico();
+//    String nombreLinaje = gestor.getNombreLinaje();
+//
+//    // Mostrar el nombre del linaje en la interfaz
+//    lblNombreLinaje.setNombreLinaje(nombreLinaje);//no entiendo esto
+//    JOptionPane.showMessageDialog(null, nombreLinaje);
 
     // Aquí puedes continuar con la visualización del árbol o cualquier otra funcionalidad
-}
+//}
 
     }//GEN-LAST:event_cargarArchivoActionPerformed
 
