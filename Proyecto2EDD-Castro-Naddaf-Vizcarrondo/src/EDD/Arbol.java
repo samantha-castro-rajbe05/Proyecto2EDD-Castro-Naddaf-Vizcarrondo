@@ -42,6 +42,10 @@ public class Arbol<T> {
     public NodoArbol<T> BuscarPorCriterio(CriterioBusqueda<T> criterio){
         return buscarNodoRecursivo(raiz, criterio);
     }
+
+    public NodoArbol<T> getRaiz() {
+        return raiz;
+    }
     
     
     

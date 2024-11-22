@@ -126,5 +126,5 @@ public class Persona {
     }
     public void agregarNota(String nota){
         this.notas.Agregar(nota);
-    }
+        }
 }

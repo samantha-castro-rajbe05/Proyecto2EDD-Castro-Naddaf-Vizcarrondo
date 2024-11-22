@@ -80,6 +80,18 @@ public class HashTable<K,V> {
         }
         return valores;
     }
+    public Lista<K> obtenerTodasLasClaves() {
+    Lista<K> claves = new Lista<>();
+    for (int i = 0; i < capacidad; i++) {
+        Entrada<K, V> actual = tabla[i];
+        while (actual != null) {
+            claves.Agregar(actual.clave);
+            actual = actual.pNext;
+        }
+    }
+    return claves;
+}
+
     
     //public String buscarNombre(String nombre){
         //validar si el nombre no esta en la lista de nombres, si no esta que salga un mensaje de error

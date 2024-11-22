@@ -171,7 +171,7 @@ public class UploadFile extends javax.swing.JFrame {
             //System.out.println(redApp.toString());
             JOptionPane.showMessageDialog(null, "Archivo cargado exitosamente");
             // Obtenemos el linaje cargado
-            Linaje linaje = func.getLinaje();
+            String linaje = func.getNombreLinaje();
 
             // Imprimimos el linaje
             JOptionPane.showMessageDialog(null, linaje);

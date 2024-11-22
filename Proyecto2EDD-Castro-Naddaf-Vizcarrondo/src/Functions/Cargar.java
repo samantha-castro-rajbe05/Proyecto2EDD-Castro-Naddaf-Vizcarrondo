@@ -6,36 +6,35 @@ package Functions;
 
 import EDD.Arbol;
 import EDD.HashTable;
+import EDD.Lista;
 import EDD.NodoArbol;
 import Persona.Persona;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.Map;
 
 public class Cargar {
     private Arbol<Persona> arbolGenealogico;
     private HashTable<String, Persona> tablaPersonas;
-    private Linaje linaje;
+    private String nombreLinaje;
 
     public Cargar() {
-        tablaPersonas = new HashTable<>(100);
+        tablaPersonas = new HashTable<>(200); // Aumentamos la capacidad si es necesario
+    }
+
+    public Cargar(String nombreLinaje) {
+        this.nombreLinaje = nombreLinaje;
     }
     
-    public Linaje getLinaje(){
-        return linaje;
-    }
 
     public void cargarArchivoJSON(String rutaArchivo) {
         try {
-            //Utilizamos Gson, una biblioteca para trabajar con JSON, para convertir el contenido del archivo en objetos Java.
             Gson gson = new Gson();
-            //Creamos un FileReader para leer el archivo especificado por rutaArchivo.
             FileReader reader = new FileReader(rutaArchivo);
 
             // Leemos el JSON como un objeto genérico
@@ -43,24 +42,22 @@ public class Cargar {
 
             // Obtenemos el linaje (casa)
             for (Map.Entry<String, JsonElement> entradaLinaje : jsonObject.entrySet()) {
-                String nombreLinaje = entradaLinaje.getKey();
-                linaje = new Linaje(nombreLinaje);
-                JsonElement miembrosLinaje = entradaLinaje.getValue();
+                nombreLinaje = entradaLinaje.getKey();
+                JsonArray miembrosLinaje = entradaLinaje.getValue().getAsJsonArray();
 
                 // Procesamos la lista de miembros del linaje
-                for (JsonElement miembroElement : miembrosLinaje.getAsJsonArray()) {
+                for (JsonElement miembroElement : miembrosLinaje) {
                     // Cada miembro es un objeto con un solo campo: el nombre de la persona
                     JsonObject miembroObject = miembroElement.getAsJsonObject();
                     for (Map.Entry<String, JsonElement> entradaMiembro : miembroObject.entrySet()) {
                         String nombrePersona = entradaMiembro.getKey();
-                        JsonElement atributosPersona = entradaMiembro.getValue();
+                        JsonArray atributosPersona = entradaMiembro.getValue().getAsJsonArray();
 
-                        // Creamos la persona y la agregamos a la tabla hash
+                        // Creamos la persona
                         Persona persona = new Persona(nombrePersona);
-                        tablaPersonas.agregarHash(nombrePersona, persona);
 
                         // Procesamos los atributos de la persona
-                        for (JsonElement atributoElement : atributosPersona.getAsJsonArray()) {
+                        for (JsonElement atributoElement : atributosPersona) {
                             JsonObject atributoObject = atributoElement.getAsJsonObject();
                             for (Map.Entry<String, JsonElement> entradaAtributo : atributoObject.entrySet()) {
                                 String claveAtributo = entradaAtributo.getKey();
@@ -70,6 +67,10 @@ public class Cargar {
                                 procesarAtributoPersona(persona, claveAtributo, valorAtributo);
                             }
                         }
+
+                        // Agregamos la persona a la tabla hash usando una clave única
+                        String clavePersona = generarClaveUnica(persona);
+                        tablaPersonas.agregarHash(clavePersona, persona);
                     }
                 }
             }
@@ -90,7 +91,9 @@ public class Cargar {
                 break;
             case "Born to":
                 String padre = valor.getAsString();
-                persona.setPadre(padre);
+                if (!padre.equals("[Unknown]")) {
+                    persona.setPadre(padre);
+                }
                 break;
             case "Known throughout as":
                 persona.setMote(valor.getAsString());
@@ -133,8 +136,9 @@ public class Cargar {
     private void construirArbolGenealogico() {
         // Primero, identificamos a la persona sin padre (la raíz)
         Persona raizPersona = null;
-        for (Persona persona : tablaPersonas.obtenerValores()) {
-            if (persona.getPadre() == null || persona.getPadre().equals("[Unknown]")) {
+        Lista<Persona> listaPersonas = tablaPersonas.obtenerValores();
+        for (Persona persona : listaPersonas) {
+            if (persona.getPadre() == null) {
                 raizPersona = persona;
                 break;
             }
@@ -152,24 +156,43 @@ public class Cargar {
         construirArbolRecursivo(nodoRaiz);
     }
 
-    //Este método toma el nodo actual y busca sus hijos en la tabla hash.
-    //Si encuentra un hijo, crea un nuevo nodo para él y llama recursivamente 
-    //al mismo método para agregar los descendientes de ese hijo.
     private void construirArbolRecursivo(NodoArbol<Persona> nodoActual) {
         Persona personaActual = nodoActual.getInfo();
-        for (String nombreHijo : personaActual.getHijos()) {
-            Persona hijoPersona = tablaPersonas.obtenerHash(nombreHijo);
-            if (hijoPersona != null) {
-                NodoArbol<Persona> nodoHijo = new NodoArbol<>(hijoPersona);
-                nodoActual.agregarHijo(nodoHijo);
+        Lista<String> nombresHijos = personaActual.getHijos();
 
-                // Llamada recursiva para construir los descendientes del hijo
-                construirArbolRecursivo(nodoHijo);
+        for (String nombreHijo : nombresHijos) {
+            String claveHijo = buscarClavePersona(nombreHijo);
+            if (claveHijo != null) {
+                Persona hijoPersona = tablaPersonas.obtenerHash(claveHijo);
+                if (hijoPersona != null) {
+                    NodoArbol<Persona> nodoHijo = new NodoArbol<>(hijoPersona);
+                    nodoActual.agregarHijo(nodoHijo);
+
+                    // Llamada recursiva para construir los descendientes del hijo
+                    construirArbolRecursivo(nodoHijo);
+                }
             }
         }
     }
 
-    // Métodos adicionales para interactuar con el árbol y la tabla hash
+    private String generarClaveUnica(Persona persona) {
+        String clave = persona.getNombre();
+        if (persona.getNumeroNombre() != null) {
+            clave += " " + persona.getNumeroNombre();
+        }
+        return clave;
+    }
+
+    private String buscarClavePersona(String nombre) {
+        // Buscamos la clave de la persona en la tabla hash
+        Lista<String> claves = tablaPersonas.obtenerTodasLasClaves();
+        for (String clave : claves) {
+            if (clave.startsWith(nombre)) {
+                return clave;
+            }
+        }
+        return null;
+    }
 
     public Arbol<Persona> getArbolGenealogico() {
         return arbolGenealogico;
@@ -178,6 +201,8 @@ public class Cargar {
     public HashTable<String, Persona> getTablaPersonas() {
         return tablaPersonas;
     }
-    
-       
+
+    public String getNombreLinaje() {
+        return nombreLinaje;
+    }
 }
