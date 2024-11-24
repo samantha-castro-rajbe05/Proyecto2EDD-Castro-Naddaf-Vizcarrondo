@@ -154,7 +154,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_mostrarAntepasadosActionPerformed
 
     private void listaGeneracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaGeneracionActionPerformed
-        Contemporaneos contemporaneos = new Contemporaneos();
+        Generacion contemporaneos = new Generacion();
         this.dispose();
     }//GEN-LAST:event_listaGeneracionActionPerformed
 
