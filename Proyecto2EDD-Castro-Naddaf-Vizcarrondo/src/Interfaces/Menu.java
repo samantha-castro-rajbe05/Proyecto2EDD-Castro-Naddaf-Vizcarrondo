@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Interfaces;
+import Funciones.MostrarArbol;
 import Interfaces.BuscarPorNombre;
+import static Interfaces.Welcome.gestionApp;
 /**
  *
  * @author samantha
@@ -140,7 +142,10 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_buscarPorNombreActionPerformed
 
     private void mostrarArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarArbolActionPerformed
-        // TODO add your handling code here:
+        System.setProperty("org.graphstream.ui", "swing");
+        MostrarArbol verArbol = new MostrarArbol(gestionApp.getArbolFamiliar());
+        verArbol.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_mostrarArbolActionPerformed
 
     private void mostrarAntepasadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarAntepasadosActionPerformed
