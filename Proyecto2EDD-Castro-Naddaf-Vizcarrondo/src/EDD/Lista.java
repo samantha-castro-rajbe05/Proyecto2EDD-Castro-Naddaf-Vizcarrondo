@@ -3,97 +3,112 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package EDD;
-import java.util.Iterator;
+import javax.swing.JOptionPane;
 /**
  *
- * @author samantha
+ * @author vizca
  */
-public class Lista<T> implements Iterable<T> {
-    
-    private NodoLista<T> pFirst;
+public class Lista {
+    private Nodo pFirts;
     private int size;
-    
-    
 
-    /**
-     * Constructor que inicializa la lista
-     */
-    public Lista() { //eliminamos los parametros
-        this.pFirst = null;
+    public Lista() {
+        this.pFirts = null;
         this.size = 0;
     }
-//métodos getters y setters para los atributos pFirst y size
-    /**
-     * Obtiene el primer nodo de la lista.
-     * @return El primer nodo.
-     */
-    public NodoLista getpFirst() {
-        return pFirst;
+
+    public Nodo getpFirts() {
+        return pFirts;
     }
-/**
- * Establece el nodo1 de la lista.
- * @param pFirst El nuevo nodo1.
- */
-    public void setpFirst(NodoLista pFirst) {
-        this.pFirst = pFirst;
+
+    public void setpFirts(Nodo pFirts) {
+        this.pFirts = pFirts;
     }
-/**
- * Obtiene el tamaño de la lista
- * @return numero de elementos dentro de la lista
- */
+
     public int getSize() {
         return size;
     }
-/**
- * Define tamaño de la lista
- * @param size nuevo tamaño de Lista.
- */
+
     public void setSize(int size) {
         this.size = size;
     }
-    
-    public void Agregar(T info){
-        NodoLista<T> nuevonodo = new NodoLista<>(info);
-        if(pFirst==null)
-            pFirst= nuevonodo;
-        else{
-            NodoLista<T> actual = pFirst;
-            while(actual.pNext!= null){
-                actual = actual.pNext;
-                
+
+    public boolean isEmpty() {
+        return pFirts == null;
+    }
+
+    public void insertFinale(Object dato) {
+        Nodo pNew = new Nodo(dato);
+        if (this.isEmpty()) {
+            this.setpFirts(pNew);
+        } else {
+            Nodo aux = this.pFirts;
+            while (aux.getpNext() != null) {
+                aux = aux.getpNext();
             }
-            actual.pNext=nuevonodo;
+            aux.setpNext(pNew);
         }
         size++;
-        
-        
-    }
-    public T obtener(int indice){
-        if(indice<0||indice>=size)
-            throw new IndexOutOfBoundsException("Indice fuera de rango");
-        NodoLista<T> actual = pFirst;
-        for (int i = 0; i < indice; i++) {
-            actual = actual.pNext;
-        }
-        return actual.info;
     }
 
-    @Override
-    public Iterator<T> iterator() {
-        return new IteradorLista();
-    }
-    private class IteradorLista implements Iterator<T>{
-
-        @Override
-        public boolean hasNext() {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean search(Object dato) {
+        if (!this.isEmpty()) {
+            if (size == 1) {
+                return this.pFirts.getDato() == dato;
+            } else {
+                Nodo aux = this.pFirts;
+                while (aux != null) {
+                    if (aux.getDato() == dato) {
+                        return true;
+                    }
+                    aux = aux.getpNext();
+                }
+                return false;
+            }
         }
-
-        @Override
-        public T next() {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-        
+        return false;
     }
     
+    
+
+    public void print() {
+        if (!this.isEmpty()) {
+            Nodo aux = this.pFirts;
+            String listaStr = "";
+            while (aux.getpNext() != null) {
+                listaStr += aux.getDato() + "\n";
+                aux = aux.getpNext();
+            }
+
+            listaStr += aux.getDato();
+
+            JOptionPane.showMessageDialog(null, listaStr);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "La lista esta vacia.");
+        }
+    }
+    
+    //Metodo para obtener el valor de un nodo en una determinada posición
+    public Object getValor(int posicion) {
+
+        if (posicion >= 0 && posicion < size) {
+
+            if (posicion == 0) {
+                return this.pFirts.getDato();
+            } else {
+                Nodo aux = this.pFirts;
+                for (int i = 0; i < posicion; i++) {
+                    aux = aux.getpNext();
+                }
+                return aux.getDato();
+            }
+        }
+        return null;
+    }
+    
+    public void destruir(){
+        this.pFirts = null;
+        this.size = 0;
+    }
 }
