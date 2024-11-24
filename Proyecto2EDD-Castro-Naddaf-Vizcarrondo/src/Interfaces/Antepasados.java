@@ -4,30 +4,27 @@
  */
 package Interfaces;
 
+import Funciones.MostrarAntepasados;
 import static Interfaces.Welcome.gestionApp;
+import static Interfaces.Welcome.validar;
 import Principal.Persona;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author samantha
  */
-public class Generacion extends javax.swing.JFrame {
-    DefaultComboBoxModel modeloGeneracion = new DefaultComboBoxModel();
-    private Persona[] resultados = null;
-    
-    public Generacion() {
+public class Antepasados extends javax.swing.JFrame {
+
+    private Persona[] resultados;
+    /**
+     * Creates new form MostrarAntepasados
+     */
+    public Antepasados() {
         initComponents();
         this.setVisible(true);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        this.llenarGeneracios();
-    }
-    
-    private void llenarGeneracios(){
-        for (int i = 0; i < gestionApp.generacionesDispo().getSize(); i++) {
-            modeloGeneracion.addElement(gestionApp.generacionesDispo().getValor(i));
-        }
     }
 
     /**
@@ -44,11 +41,12 @@ public class Generacion extends javax.swing.JFrame {
         exit = new javax.swing.JButton();
         volver = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        generacionesDisponibles = new javax.swing.JComboBox<>();
-        listarGen = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        inputNombre = new javax.swing.JTextField();
+        buscar = new javax.swing.JButton();
         resultadoStr = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
+        inputIndice = new javax.swing.JTextField();
+        verAntepasados = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -58,8 +56,8 @@ public class Generacion extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Palatino", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel1.setText("GENERACIONES");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+        jLabel1.setText("MOSTRAR ANTEPASADOS");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
 
         exit.setBackground(new java.awt.Color(204, 204, 204));
         exit.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
@@ -83,40 +81,47 @@ public class Generacion extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel2.setText("Selecciona la generacion que quieres mostrar:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, -1));
+        jLabel2.setText("Ingresa el nombre de la persona:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, 30));
 
-        generacionesDisponibles.setBackground(new java.awt.Color(204, 204, 204));
-        generacionesDisponibles.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
-        generacionesDisponibles.setModel(modeloGeneracion);
-        generacionesDisponibles.addActionListener(new java.awt.event.ActionListener() {
+        inputNombre.setBackground(new java.awt.Color(204, 204, 204));
+        inputNombre.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        jPanel1.add(inputNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 240, -1));
+
+        buscar.setBackground(new java.awt.Color(204, 204, 204));
+        buscar.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        buscar.setText("Buscar");
+        buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                generacionesDisponiblesActionPerformed(evt);
+                buscarActionPerformed(evt);
             }
         });
-        jPanel1.add(generacionesDisponibles, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 240, -1));
-
-        listarGen.setBackground(new java.awt.Color(204, 204, 204));
-        listarGen.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
-        listarGen.setText("Listar Generacion");
-        listarGen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listarGenActionPerformed(evt);
-            }
-        });
-        jPanel1.add(listarGen, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/generacion.png"))); // NOI18N
-        jLabel4.setText("jLabel4");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, -1, -1));
+        jPanel1.add(buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 80, -1));
 
         resultadoStr.setBackground(new java.awt.Color(204, 204, 204));
         resultadoStr.setColumns(20);
         resultadoStr.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
         resultadoStr.setRows(5);
-        jScrollPane1.setViewportView(resultadoStr);
+        jPanel1.add(resultadoStr, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, -1, -1));
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 250, 170));
+        jLabel3.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel3.setText("Ingrese el indice de la persona para mostrar los antepasados:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, -1, -1));
+
+        inputIndice.setBackground(new java.awt.Color(204, 204, 204));
+        inputIndice.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        jPanel1.add(inputIndice, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 180, -1));
+
+        verAntepasados.setBackground(new java.awt.Color(204, 204, 204));
+        verAntepasados.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        verAntepasados.setText("Ver Antepasados");
+        verAntepasados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verAntepasadosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(verAntepasados, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 330, 160, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 400));
 
@@ -132,19 +137,37 @@ public class Generacion extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_volverActionPerformed
 
-    private void generacionesDisponiblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generacionesDisponiblesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_generacionesDisponiblesActionPerformed
+    private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
+        String nombreBusq = inputNombre.getText();
+        resultados = gestionApp.buscarSoloNombre(nombreBusq);
+        if (resultados != null) {
 
-    private void listarGenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarGenActionPerformed
-        int numGen = (int) generacionesDisponibles.getSelectedItem();
-        resultados = gestionApp.buscarGeneracion(numGen);
-        if(resultados==null){
-            resultadoStr.setText("No se encontraron resultados\n");
-        }else{
-            resultadoStr.setText(gestionApp.mostrarGeneracion(resultados, numGen));
+            resultadoStr.setText(gestionApp.mostrarBusquedaSoloNombre(resultados));
+        } else {
+            resultadoStr.setText("");
+            JOptionPane.showMessageDialog(null, "No se encontraron coincidencias con la busqueda.");
         }
-    }//GEN-LAST:event_listarGenActionPerformed
+
+    }//GEN-LAST:event_buscarActionPerformed
+
+    private void verAntepasadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verAntepasadosActionPerformed
+        String indiceStr = inputIndice.getText();
+        if (validar.convertirNumero(indiceStr) != -1) {
+            int index = validar.convertirNumero(indiceStr);
+            if (validar.validarIndice(resultados.length, index)) {
+                System.setProperty("org.graphstream.ui", "swing");
+
+                MostrarAntepasados verArbol = new MostrarAntepasados(gestionApp.antepasados(resultados[index]), this);
+                verArbol.setVisible(true);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Indice Invalido");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe ser un numero entero");
+        }
+        inputIndice.setText("");
+    }//GEN-LAST:event_verAntepasadosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,13 +186,13 @@ public class Generacion extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Generacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Antepasados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Generacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Antepasados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Generacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Antepasados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Generacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Antepasados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -177,21 +200,22 @@ public class Generacion extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Generacion().setVisible(true);
+                new Antepasados().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buscar;
     private javax.swing.JButton exit;
-    private javax.swing.JComboBox<String> generacionesDisponibles;
+    private javax.swing.JTextField inputIndice;
+    private javax.swing.JTextField inputNombre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton listarGen;
     private javax.swing.JTextArea resultadoStr;
+    private javax.swing.JButton verAntepasados;
     private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables
 }
