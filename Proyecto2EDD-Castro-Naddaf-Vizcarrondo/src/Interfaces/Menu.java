@@ -137,7 +137,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_exitActionPerformed
 
     private void buscarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarPorNombreActionPerformed
-        BuscarNombre buscarPorNombre = new BuscarNombre();
+        BuscarPorNombre buscarPorNombre = new BuscarPorNombre();
         this.dispose();
     }//GEN-LAST:event_buscarPorNombreActionPerformed
 

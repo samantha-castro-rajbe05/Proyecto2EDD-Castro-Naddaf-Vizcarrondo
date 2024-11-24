@@ -30,16 +30,54 @@ public class MostrarAntepasados extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        exit = new javax.swing.JButton();
+        volver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Palatino", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel1.setText("MOSTRAR ANTEPASADOS");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
+
+        exit.setBackground(new java.awt.Color(204, 204, 204));
+        exit.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        exit.setText("X");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
+        jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 40, -1));
+
+        volver.setBackground(new java.awt.Color(204, 204, 204));
+        volver.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        volver.setText("<-- Volver al menú");
+        volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                volverActionPerformed(evt);
+            }
+        });
+        jPanel1.add(volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 370, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 400));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        dispose();
+    }//GEN-LAST:event_exitActionPerformed
+
+    private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
+        Menu menu = new Menu();
+        this.dispose();
+    }//GEN-LAST:event_volverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -77,6 +115,9 @@ public class MostrarAntepasados extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton exit;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables
 }

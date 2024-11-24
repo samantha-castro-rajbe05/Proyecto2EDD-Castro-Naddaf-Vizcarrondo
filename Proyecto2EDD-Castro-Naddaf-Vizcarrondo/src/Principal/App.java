@@ -7,10 +7,6 @@ import EDD.Arbol;
 import EDD.Lista;
 import EDD.NodoA;
 import EDD.TablaHash;
-/**
- *
- * @author vizca
- */
 
 
 /**
@@ -19,7 +15,8 @@ import EDD.TablaHash;
  * Proporciona métodos para gestionar personas, realizar búsquedas, y obtener información de descendencia,
  * antepasados y generaciones.
  * 
- * @author Moises Liota
+ * @author vizca 
+ *
  */
 public class App {
 
