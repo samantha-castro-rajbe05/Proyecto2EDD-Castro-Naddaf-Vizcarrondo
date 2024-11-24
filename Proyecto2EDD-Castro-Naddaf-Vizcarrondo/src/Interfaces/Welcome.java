@@ -4,8 +4,12 @@
  */
 package Interfaces;
 
+import Cargas.CargarJSON;
+import Cargas.FileChooser;
+import Funciones.MostrarArbol;
 import Funciones.Validar;
 import Principal.App;
+import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
 
 /**
@@ -87,9 +91,42 @@ public class Welcome extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
-       UploadFile cargar = new UploadFile();               
+        CargarJSON cargarArchivo = new CargarJSON(); // Utiliza la clase CargarJSON
+        FileChooser abrir = new FileChooser(this);   // Utiliza la clase FileChooser
+
+        // Abrir selector de archivos para obtener la ruta del archivo JSON
+        String ruta = abrir.abrirArchivo();
+
+        try {
+            // Intentar cargar el archivo seleccionado
+            cargarArchivo.cargarDesdeJSON(ruta);
+
+            // Verificar si se cargó correctamente
+            if (cargarArchivo.getArbolGenealogico() != null) {
+                JOptionPane.showMessageDialog(null, "Carga exitosa");
+                JOptionPane.showMessageDialog(null, cargarArchivo.getLinaje());
+
+                // Configurar la clase App con las estructuras cargadas
+                gestionApp.setArbolFamiliar(cargarArchivo.getArbolGenealogico());
+                gestionApp.setPersonasHash(cargarArchivo.getTablaPersonas());
+                gestionApp.setLinajeFamilia(cargarArchivo.getLinaje());
+
+                Menu menu = new Menu();
+                this.dispose(); 
+//                System.setProperty("org.graphstream.ui", "swing");
+//                MostrarArbol verArbol = new MostrarArbol(gestionApp.getArbolFamiliar());
+//                verArbol.setVisible(true);
+//                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Hay errores en el JSON");
+            }
+        } catch (FileNotFoundException ex) {
+            // Manejo de excepción si no se encuentra el archivo
+
+        }
+               
         
-        this.dispose(); 
+        
     }//GEN-LAST:event_startActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed

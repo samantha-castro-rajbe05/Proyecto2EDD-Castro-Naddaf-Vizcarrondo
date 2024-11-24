@@ -4,12 +4,19 @@
  */
 package Interfaces;
 
+import Funciones.MostrarAntepasados;
+import static Interfaces.Welcome.gestionApp;
+import static Interfaces.Welcome.validar;
+import Principal.Persona;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author samantha
  */
 public class Antepasados extends javax.swing.JFrame {
 
+    private Persona[] resultados;
     /**
      * Creates new form MostrarAntepasados
      */
@@ -33,6 +40,13 @@ public class Antepasados extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         exit = new javax.swing.JButton();
         volver = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        inputNombre = new javax.swing.JTextField();
+        buscar = new javax.swing.JButton();
+        resultadoStr = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
+        inputIndice = new javax.swing.JTextField();
+        verAntepasados = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -65,6 +79,50 @@ public class Antepasados extends javax.swing.JFrame {
         });
         jPanel1.add(volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 370, -1, -1));
 
+        jLabel2.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setText("Ingresa el nombre de la persona:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, 30));
+
+        inputNombre.setBackground(new java.awt.Color(204, 204, 204));
+        inputNombre.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        jPanel1.add(inputNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 240, -1));
+
+        buscar.setBackground(new java.awt.Color(204, 204, 204));
+        buscar.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        buscar.setText("Buscar");
+        buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 80, -1));
+
+        resultadoStr.setBackground(new java.awt.Color(204, 204, 204));
+        resultadoStr.setColumns(20);
+        resultadoStr.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        resultadoStr.setRows(5);
+        jPanel1.add(resultadoStr, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel3.setText("Ingrese el indice de la persona para mostrar los antepasados:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, -1, -1));
+
+        inputIndice.setBackground(new java.awt.Color(204, 204, 204));
+        inputIndice.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        jPanel1.add(inputIndice, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 180, -1));
+
+        verAntepasados.setBackground(new java.awt.Color(204, 204, 204));
+        verAntepasados.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        verAntepasados.setText("Ver Antepasados");
+        verAntepasados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verAntepasadosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(verAntepasados, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 330, 160, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 400));
 
         pack();
@@ -78,6 +136,38 @@ public class Antepasados extends javax.swing.JFrame {
         Menu menu = new Menu();
         this.dispose();
     }//GEN-LAST:event_volverActionPerformed
+
+    private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
+        String nombreBusq = inputNombre.getText();
+        resultados = gestionApp.buscarSoloNombre(nombreBusq);
+        if (resultados != null) {
+
+            resultadoStr.setText(gestionApp.mostrarBusquedaSoloNombre(resultados));
+        } else {
+            resultadoStr.setText("");
+            JOptionPane.showMessageDialog(null, "No se encontraron coincidencias con la busqueda.");
+        }
+
+    }//GEN-LAST:event_buscarActionPerformed
+
+    private void verAntepasadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verAntepasadosActionPerformed
+        String indiceStr = inputIndice.getText();
+        if (validar.convertirNumero(indiceStr) != -1) {
+            int index = validar.convertirNumero(indiceStr);
+            if (validar.validarIndice(resultados.length, index)) {
+                System.setProperty("org.graphstream.ui", "swing");
+
+                MostrarAntepasados verArbol = new MostrarAntepasados(gestionApp.antepasados(resultados[index]), this);
+                verArbol.setVisible(true);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Indice Invalido");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe ser un numero entero");
+        }
+        inputIndice.setText("");
+    }//GEN-LAST:event_verAntepasadosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -116,9 +206,16 @@ public class Antepasados extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buscar;
     private javax.swing.JButton exit;
+    private javax.swing.JTextField inputIndice;
+    private javax.swing.JTextField inputNombre;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextArea resultadoStr;
+    private javax.swing.JButton verAntepasados;
     private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables
 }

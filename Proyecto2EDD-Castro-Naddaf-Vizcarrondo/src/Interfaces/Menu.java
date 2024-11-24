@@ -3,9 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Interfaces;
+import Cargas.CargarJSON;
+import Cargas.FileChooser;
 import Funciones.MostrarArbol;
 import Interfaces.BuscarPorNombre;
+import Interfaces.BuscarPorTitulo;
 import static Interfaces.Welcome.gestionApp;
+import java.io.FileNotFoundException;
+import javax.swing.JOptionPane;
 /**
  *
  * @author samantha
@@ -159,11 +164,41 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_listaGeneracionActionPerformed
 
     private void cargarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarArchivoActionPerformed
+        CargarJSON cargarArchivo = new CargarJSON(); // Utiliza la clase CargarJSON
+        FileChooser abrir = new FileChooser(this);   // Utiliza la clase FileChooser
 
-        //abrimos ventana cargar
-        UploadFile cargarRed = new UploadFile();
-        //cerramos esta ventana
-        this.dispose();
+        // Abrir selector de archivos para obtener la ruta del archivo JSON
+        String ruta = abrir.abrirArchivo();
+
+        try {
+            // Intentar cargar el archivo seleccionado
+            cargarArchivo.cargarDesdeJSON(ruta);
+
+            // Verificar si se cargó correctamente
+            if (cargarArchivo.getArbolGenealogico() != null) {
+                JOptionPane.showMessageDialog(null, "Carga exitosa");
+
+                // Configurar la clase App con las estructuras cargadas
+                gestionApp.setArbolFamiliar(cargarArchivo.getArbolGenealogico());
+                gestionApp.setPersonasHash(cargarArchivo.getTablaPersonas());
+                gestionApp.setLinajeFamilia(cargarArchivo.getLinaje());
+
+                
+
+                // Navegar al menú principal
+                Menu menu = new Menu();
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Hay errores en el JSON");
+            }
+        } catch (FileNotFoundException ex) {
+            // Manejo de excepción si no se encuentra el archivo
+
+        }
+//cerramos esta ventana
+        this.dispose();                                   
+ 
+        
     }//GEN-LAST:event_cargarArchivoActionPerformed
 
     private void buscarPorTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarPorTituloActionPerformed

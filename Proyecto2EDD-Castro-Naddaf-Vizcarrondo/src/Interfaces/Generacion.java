@@ -46,8 +46,9 @@ public class Generacion extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         generacionesDisponibles = new javax.swing.JComboBox<>();
         listarGen = new javax.swing.JButton();
-        resultadoStr = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        resultadoStr = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -105,15 +106,17 @@ public class Generacion extends javax.swing.JFrame {
         });
         jPanel1.add(listarGen, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
 
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/generacion.png"))); // NOI18N
+        jLabel4.setText("jLabel4");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, -1, -1));
+
         resultadoStr.setBackground(new java.awt.Color(204, 204, 204));
         resultadoStr.setColumns(20);
         resultadoStr.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
         resultadoStr.setRows(5);
-        jPanel1.add(resultadoStr, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 250, 180));
+        jScrollPane1.setViewportView(resultadoStr);
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/generacion.png"))); // NOI18N
-        jLabel4.setText("jLabel4");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, -1, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 250, 170));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 400));
 
@@ -186,6 +189,7 @@ public class Generacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton listarGen;
     private javax.swing.JTextArea resultadoStr;
     private javax.swing.JButton volver;
