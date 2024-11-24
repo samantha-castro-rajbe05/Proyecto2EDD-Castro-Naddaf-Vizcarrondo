@@ -3,82 +3,112 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package EDD;
-import java.util.Iterator;
+import javax.swing.JOptionPane;
 /**
  *
- * @author samantha
+ * @author vizca
  */
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
-public class Lista<T> implements Iterable<T> {
-    private NodoLista<T> cabeza;
-    private int tamaño;
+public class Lista {
+    private Nodo pFirts;
+    private int size;
 
     public Lista() {
-        this.cabeza = null;
-        this.tamaño = 0;
+        this.pFirts = null;
+        this.size = 0;
     }
 
-    public void agregar(T data) {
-        NodoLista<T> nuevoNodo = new NodoLista<>(data);
-        if (cabeza == null) {
-            cabeza = nuevoNodo;
+    public Nodo getpFirts() {
+        return pFirts;
+    }
+
+    public void setpFirts(Nodo pFirts) {
+        this.pFirts = pFirts;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public boolean isEmpty() {
+        return pFirts == null;
+    }
+
+    public void insertFinale(Object dato) {
+        Nodo pNew = new Nodo(dato);
+        if (this.isEmpty()) {
+            this.setpFirts(pNew);
         } else {
-            NodoLista<T> actual = cabeza;
-            while (actual.siguiente != null) {
-                actual = actual.siguiente;
+            Nodo aux = this.pFirts;
+            while (aux.getpNext() != null) {
+                aux = aux.getpNext();
             }
-            actual.siguiente = nuevoNodo;
+            aux.setpNext(pNew);
         }
-        tamaño++;
+        size++;
     }
 
-    public int getTamaño() {
-        return tamaño;
-    }
-
-    public T obtener(int indice) {
-        if (indice < 0 || indice >= tamaño) {
-            throw new IndexOutOfBoundsException("Índice fuera de rango");
-        }
-        NodoLista<T> actual = cabeza;
-        for (int i = 0; i < indice; i++) {
-            actual = actual.siguiente;
-        }
-        return actual.data;
-    }
-
-    public boolean estaVacia() {
-        return tamaño == 0;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new IteradorLista();
-    }
-
-    private class IteradorLista implements Iterator<T> {
-        private NodoLista<T> actual;
-
-        public IteradorLista() {
-            this.actual = cabeza;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return actual != null;
-        }
-
-        @Override
-        public T next() {
-            if (actual == null) {
-                throw new NoSuchElementException();
+    public boolean search(Object dato) {
+        if (!this.isEmpty()) {
+            if (size == 1) {
+                return this.pFirts.getDato() == dato;
+            } else {
+                Nodo aux = this.pFirts;
+                while (aux != null) {
+                    if (aux.getDato() == dato) {
+                        return true;
+                    }
+                    aux = aux.getpNext();
+                }
+                return false;
             }
-            T data = actual.data;
-            actual = actual.siguiente;
-            return data;
         }
+        return false;
+    }
+    
+    
+
+    public void print() {
+        if (!this.isEmpty()) {
+            Nodo aux = this.pFirts;
+            String listaStr = "";
+            while (aux.getpNext() != null) {
+                listaStr += aux.getDato() + "\n";
+                aux = aux.getpNext();
+            }
+
+            listaStr += aux.getDato();
+
+            JOptionPane.showMessageDialog(null, listaStr);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "La lista esta vacia.");
+        }
+    }
+    
+    //Metodo para obtener el valor de un nodo en una determinada posición
+    public Object getValor(int posicion) {
+
+        if (posicion >= 0 && posicion < size) {
+
+            if (posicion == 0) {
+                return this.pFirts.getDato();
+            } else {
+                Nodo aux = this.pFirts;
+                for (int i = 0; i < posicion; i++) {
+                    aux = aux.getpNext();
+                }
+                return aux.getDato();
+            }
+        }
+        return null;
+    }
+    
+    public void destruir(){
+        this.pFirts = null;
+        this.size = 0;
     }
 }
-

@@ -2,202 +2,235 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Functions;
 
-import EDD.Arbol;
-import EDD.HashTable;
-import EDD.Lista;
-import EDD.NodoArbol;
-import Persona.Persona;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonArray;
+package EDD;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Map;
+import Principal.Persona;
 
-public class Cargar {
-    private Arbol<Persona> arbolGenealogico;
-    private HashTable<String, Persona> tablaPersonas;
-    private String nombreLinaje;
+/**
+ * Implementación alternativa de la clase Arbol.
+ * Este árbol general permite organizar nodos jerárquicos, trabajar con niveles, buscar por nombre único y gestionar antepasados.
+ * Los nodos están representados por la clase {@link NodoA}.
+ * 
+ * @author
+ */
+public class Arbol {
 
-    public Cargar() {
-        tablaPersonas = new HashTable<>(200); // Ajusta la capacidad según sea necesario
+    private NodoA raiz; // Nodo raíz del árbol
+
+    /**
+     * Constructor por defecto. Inicializa el árbol vacío.
+     */
+    public Arbol() {
+        this.raiz = null;
     }
 
-    public void cargar(String rutaArchivo) {
-        try {
-            Gson gson = new Gson();
-            FileReader reader = new FileReader(rutaArchivo);
+    /**
+     * Retorna el nodo raíz del árbol.
+     * 
+     * @return la raíz del árbol
+     */
+    public NodoA getRaiz() {
+        return raiz;
+    }
 
-            // Leemos el JSON como un objeto genérico
-            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+    /**
+     * Establece el nodo raíz del árbol.
+     * 
+     * @param raiz el nodo a establecer como raíz
+     */
+    public void setRaiz(NodoA raiz) {
+        this.raiz = raiz;
+    }
 
-            // Obtenemos el linaje (casa)
-            for (Map.Entry<String, JsonElement> entradaLinaje : jsonObject.entrySet()) {
-                nombreLinaje = entradaLinaje.getKey();
-                JsonArray miembrosLinaje = entradaLinaje.getValue().getAsJsonArray();
+    /**
+     * Verifica si el árbol está vacío.
+     * 
+     * @return true si no hay nodos en el árbol, false en caso contrario
+     */
+    public boolean estaVacio() {
+        return this.raiz == null;
+    }
 
-                // Procesamos la lista de miembros del linaje
-                for (JsonElement miembroElement : miembrosLinaje) {
-                    // Cada miembro es un objeto con un solo campo: el nombre de la persona
-                    JsonObject miembroObject = miembroElement.getAsJsonObject();
-                    for (Map.Entry<String, JsonElement> entradaMiembro : miembroObject.entrySet()) {
-                        String nombrePersona = entradaMiembro.getKey();
-                        JsonArray atributosPersona = entradaMiembro.getValue().getAsJsonArray();
+    /**
+     * Inicializa la raíz del árbol con una persona.
+     * 
+     * @param persona la persona que será la raíz
+     */
+    public void crearRaiz(Persona persona) {
+        this.raiz = new NodoA(persona);
+    }
 
-                        // Creamos la persona
-                        Persona persona = new Persona(nombrePersona);
+    /**
+     * Agrega un nuevo nodo como hijo de un nodo padre.
+     * 
+     * @param padre el nodo padre al que se agregará el hijo
+     * @param persona la persona asociada al nodo hijo
+     */
+    public void agregarHijo(NodoA padre, Persona persona) {
+        NodoA nuevoHijo = new NodoA(persona);
+        nuevoHijo.setPadre(padre);
+        padre.agregarHijo(nuevoHijo);
+    }
 
-                        // Procesamos los atributos de la persona
-                        for (JsonElement atributoElement : atributosPersona) {
-                            JsonObject atributoObject = atributoElement.getAsJsonObject();
-                            for (Map.Entry<String, JsonElement> entradaAtributo : atributoObject.entrySet()) {
-                                String claveAtributo = entradaAtributo.getKey();
-                                JsonElement valorAtributo = entradaAtributo.getValue();
+    /**
+     * Busca un nodo en el árbol por su nombre único.
+     * 
+     * @param nombreUnico el nombre único de la persona a buscar
+     * @return el nodo que contiene la persona, o null si no se encuentra
+     */
+    public NodoA buscarPorNombre(String nombreUnico) {
+        if (estaVacio()) {
+            return null;
+        }
 
-                                // Procesamos cada atributo
-                                procesarAtributoPersona(persona, claveAtributo, valorAtributo);
-                            }
-                        }
+        Cola cola = new Cola();
+        cola.insert(raiz);
 
-                        // Agregamos la persona a la tabla hash usando una clave única
-                        String clavePersona = generarClaveUnica(persona);
-                        tablaPersonas.agregar(clavePersona, persona);
-                    }
-                }
+        while (!cola.isEmpty()) {
+            NodoA actual = (NodoA) cola.delete();
+            Persona persona = actual.getPersona();
+
+            // Comparación por mote o nombre completo + numeral
+            if (persona.getMote() != null && persona.getMote().equalsIgnoreCase(nombreUnico)) {
+                return actual;
+            }
+            
+            if (persona.getNombreNumeral().equalsIgnoreCase(nombreUnico)) {
+                return actual;
             }
 
-            // Después de cargar todas las personas, construimos el árbol genealógico
-            construirArbolGenealogico();
-
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void procesarAtributoPersona(Persona persona, String clave, JsonElement valor) {
-        switch (clave) {
-            case "Of his name":
-                persona.setNumeroNombre(valor.getAsString());
-                break;
-            case "Born to":
-                String padre = valor.getAsString();
-                if (!padre.equals("[Unknown]")) {
-                    persona.setPadre(padre);
-                }
-                break;
-            case "Known throughout as":
-                persona.setMote(valor.getAsString());
-                break;
-            case "Held title":
-                persona.setTitulo(valor.getAsString());
-                break;
-            case "Wed to":
-                persona.setConyuge(valor.getAsString());
-                break;
-            case "Of eyes":
-                persona.setOjos(valor.getAsString());
-                break;
-            case "Of hair":
-                persona.setCabello(valor.getAsString());
-                break;
-            case "Father to":
-                // Lista de hijos
-                if (valor.isJsonArray()) {
-                    for (JsonElement hijoElement : valor.getAsJsonArray()) {
-                        persona.agregarHijo(hijoElement.getAsString());
-                    }
-                } else {
-                    persona.agregarHijo(valor.getAsString());
-                }
-                break;
-            case "Notes":
-                persona.agregarNota(valor.getAsString());
-                break;
-            case "Fate":
-                persona.setDestino(valor.getAsString());
-                break;
-            // Puedes agregar más casos si hay otros atributos
-            default:
-                // Manejar atributos desconocidos si es necesario
-                break;
-        }
-    }
-
-    private void construirArbolGenealogico() {
-        // Primero, identificamos a la persona sin padre (la raíz)
-        Persona raizPersona = null;
-        Lista<Persona> listaPersonas = tablaPersonas.obtenerTodosLosValores();
-        for (Persona persona : listaPersonas) {
-            if (persona.getPadre() == null) {
-                raizPersona = persona;
-                break;
+            // Encolar hijos
+            Nodo hijo = actual.getHijos().getpFirts();
+            while (hijo != null) {
+                cola.insert(hijo.getDato());
+                hijo = hijo.getpNext();
             }
         }
 
-        if (raizPersona == null) {
-            System.out.println("No se pudo encontrar la raíz del árbol genealógico.");
-            return;
-        }
-
-        NodoArbol<Persona> nodoRaiz = new NodoArbol<>(raizPersona);
-        arbolGenealogico = new Arbol<>(nodoRaiz);
-
-        // Construimos el árbol recursivamente
-        construirArbolRecursivo(nodoRaiz);
-    }
-
-    private void construirArbolRecursivo(NodoArbol<Persona> nodoActual) {
-        Persona personaActual = nodoActual.getData();
-        Lista<String> nombresHijos = personaActual.getHijos();
-
-        for (String nombreHijo : nombresHijos) {
-            String claveHijo = buscarClavePersona(nombreHijo);
-            if (claveHijo != null) {
-                Persona hijoPersona = tablaPersonas.obtener(claveHijo);
-                if (hijoPersona != null) {
-                    NodoArbol<Persona> nodoHijo = new NodoArbol<>(hijoPersona);
-                    nodoActual.agregarHijo(nodoHijo);
-
-                    // Llamada recursiva para construir los descendientes del hijo
-                    construirArbolRecursivo(nodoHijo);
-                }
-            }
-        }
-    }
-
-    private String generarClaveUnica(Persona persona) {
-        String clave = persona.getNombre();
-        if (persona.getNumeroNombre() != null) {
-            clave += " " + persona.getNumeroNombre();
-        }
-        return clave;
-    }
-
-    private String buscarClavePersona(String nombre) {
-        // Buscamos la clave de la persona en la tabla hash
-        Lista<String> claves = tablaPersonas.obtenerTodasLasClaves();
-        for (String clave : claves) {
-            if (clave.startsWith(nombre)) {
-                return clave;
-            }
-        }
         return null;
     }
 
-    public Arbol<Persona> getArbolGenealogico() {
-        return arbolGenealogico;
+    /**
+     * Imprime el árbol por niveles, mostrando cada nivel en orden.
+     */
+    public void imprimirPorNiveles() {
+        if (estaVacio()) {
+            System.out.println("El árbol está vacío.");
+            return;
+        }
+
+        Cola cola = new Cola();
+        cola.insert(raiz);
+        StringBuilder resultado = new StringBuilder("Árbol por niveles:\n");
+
+        while (!cola.isEmpty()) {
+            NodoA actual = (NodoA) cola.delete();
+            resultado.append(actual.getPersona().toString()).append("\n");
+
+            // Encolar hijos
+            Nodo hijo = actual.getHijos().getpFirts();
+            while (hijo != null) {
+                cola.insert(hijo.getDato());
+                hijo = hijo.getpNext();
+            }
+        }
+
+        System.out.println(resultado.toString());
     }
 
-    public HashTable<String, Persona> getTablaPersonas() {
-        return tablaPersonas;
+    /**
+     * Calcula el nivel máximo (profundidad) del árbol.
+     * 
+     * @return el nivel máximo alcanzado en el árbol
+     */
+    public int obtenerProfundidadMaxima() {
+        if (estaVacio()) {
+            return 0;
+        }
+
+        int profundidadMax = 0;
+        Cola colaNodos = new Cola();
+        Cola colaNiveles = new Cola();
+
+        colaNodos.insert(raiz);
+        colaNiveles.insert(1);
+
+        while (!colaNodos.isEmpty()) {
+            NodoA actual = (NodoA) colaNodos.delete();
+            int nivelActual = (int) colaNiveles.delete();
+
+            profundidadMax = Math.max(profundidadMax, nivelActual);
+
+            // Encolar hijos con su nivel
+            Nodo hijo = actual.getHijos().getpFirts();
+            while (hijo != null) {
+                colaNodos.insert(hijo.getDato());
+                colaNiveles.insert(nivelActual + 1);
+                hijo = hijo.getpNext();
+            }
+        }
+
+        return profundidadMax;
     }
 
-    public String getNombreLinaje() {
-        return nombreLinaje;
+    /**
+     * Devuelve una lista con todas las personas en un nivel específico.
+     * 
+     * @param nivel el nivel que se desea obtener
+     * @return una lista con las personas del nivel, o null si el nivel no existe
+     */
+    public Lista obtenerPersonasEnNivel(int nivel) {
+        if (estaVacio() || nivel < 1) {
+            return null;
+        }
+
+        Lista personasNivel = new Lista();
+        Cola colaNodos = new Cola();
+        Cola colaNiveles = new Cola();
+
+        colaNodos.insert(raiz);
+        colaNiveles.insert(1);
+
+        while (!colaNodos.isEmpty()) {
+            NodoA actual = (NodoA) colaNodos.delete();
+            int nivelActual = (int) colaNiveles.delete();
+
+            if (nivelActual == nivel) {
+                personasNivel.insertFinale(actual.getPersona());
+            }
+
+            Nodo hijo = actual.getHijos().getpFirts();
+            while (hijo != null) {
+                colaNodos.insert(hijo.getDato());
+                colaNiveles.insert(nivelActual + 1);
+                hijo = hijo.getpNext();
+            }
+        }
+
+        return personasNivel;
+    }
+
+    /**
+     * Devuelve una lista con los antepasados de un nodo específico.
+     * 
+     * @param nodo el nodo cuyo linaje ascendente se desea obtener
+     * @return una lista con los antepasados del nodo
+     */
+    public Lista obtenerAntepasados(NodoA nodo) {
+        if (nodo == null) {
+            return null;
+        }
+
+        Lista antepasados = new Lista();
+        NodoA actual = nodo.getPadre();
+
+        while (actual != null) {
+            antepasados.insertFinale(actual.getPersona());
+            actual = actual.getPadre();
+        }
+
+        return antepasados;
     }
 }
+
