@@ -3,17 +3,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Principal;
-
 import EDD.Arbol;
 import EDD.Lista;
 import EDD.NodoA;
 import EDD.TablaHash;
-
 /**
  *
  * @author vizca
  */
+
+
+/**
+ * Clase principal de la aplicación que gestiona las estructuras principales: un árbol genealógico y una tabla hash.
+ * 
+ * Proporciona métodos para gestionar personas, realizar búsquedas, y obtener información de descendencia,
+ * antepasados y generaciones.
+ * 
+ * @author Moises Liota
+ */
 public class App {
+
     private TablaHash personasHash; // Tabla hash para almacenamiento rápido
     private Arbol arbolFamiliar;   // Árbol genealógico para organizar jerárquicamente
     private String linajeFamilia;  // Nombre del linaje o familia
@@ -288,3 +297,4 @@ public class App {
         return resultadosStr;
     }
 }
+
