@@ -4,10 +4,12 @@
  */
 package Funciones;
 
+import EDD.Arbol;
+
 /**
  *
  * @author samantha
  */
 public class MostrarDescendencia {
-    
+    private Arbol arbol; 
 }

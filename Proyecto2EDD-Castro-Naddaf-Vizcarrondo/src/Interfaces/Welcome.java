@@ -4,7 +4,7 @@
  */
 package Interfaces;
 
-import Functions.Validar;
+import Funciones.Validar;
 import Principal.App;
 import javax.swing.JOptionPane;
 
