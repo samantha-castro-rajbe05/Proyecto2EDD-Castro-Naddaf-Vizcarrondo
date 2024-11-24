@@ -16,7 +16,7 @@ import java.io.FileReader;
 
 /**
  *
- * @author samantha
+ * @author vizca
  */
 public class CargarJSON {
     private Arbol arbolGenealogico; // Estructura para almacenar el árbol
