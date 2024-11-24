@@ -234,7 +234,7 @@ public class App {
     }
 
     /**
-     * Obtiene una lista de antepasados de una persona específica.
+     * La funcion obtiene una lista de los antepasados de forma especifica.
      *
      * @param persona la persona cuyos antepasados se desean obtener
      * @return una lista con los antepasados
