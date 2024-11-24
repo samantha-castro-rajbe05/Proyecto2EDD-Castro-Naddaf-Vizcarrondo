@@ -4,11 +4,18 @@
  */
 package Interfaces;
 
+import static Interfaces.Welcome.gestionApp;
+import static Interfaces.Welcome.validar;
+import Principal.Persona;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author samantha
  */
 public class BuscarPorTitulo extends javax.swing.JFrame {
+
+    private Persona[] resultados;
 
     /**
      * Creates new form BuscarPorTitulo
@@ -30,16 +37,148 @@ public class BuscarPorTitulo extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        inputTitulo = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        exit = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        resultadoStr = new javax.swing.JTextArea();
+        inputIndice = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        verDescendencia = new javax.swing.JButton();
+        buscar = new javax.swing.JButton();
+        volver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        inputTitulo.setBackground(new java.awt.Color(204, 204, 204));
+        inputTitulo.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        inputTitulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputTituloActionPerformed(evt);
+            }
+        });
+        jPanel2.add(inputTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 270, -1));
+
+        jLabel1.setFont(new java.awt.Font("Palatino", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel1.setText("BUSCAR POR TÍTULO");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, -1, -1));
+
+        exit.setBackground(new java.awt.Color(204, 204, 204));
+        exit.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        exit.setText("X");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
+        jPanel2.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 40, -1));
+
+        jLabel2.setFont(new java.awt.Font("Palatino", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setText("Ingrese el indice de la persona para mostrar el detalle:");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, -1, -1));
+
+        resultadoStr.setBackground(new java.awt.Color(204, 204, 204));
+        resultadoStr.setColumns(20);
+        resultadoStr.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        resultadoStr.setRows(5);
+        jScrollPane1.setViewportView(resultadoStr);
+
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 270, 140));
+
+        inputIndice.setBackground(new java.awt.Color(204, 204, 204));
+        inputIndice.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        jPanel2.add(inputIndice, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 130, -1));
+
+        jLabel3.setFont(new java.awt.Font("Palatino", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel3.setText("Ingresa el título nobiliario que quieres buscar:");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
+
+        verDescendencia.setBackground(new java.awt.Color(204, 204, 204));
+        verDescendencia.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        verDescendencia.setText("Ver descendencia");
+        verDescendencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verDescendenciaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(verDescendencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, -1, -1));
+
+        buscar.setBackground(new java.awt.Color(204, 204, 204));
+        buscar.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        buscar.setText("Buscar");
+        buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 110, -1, -1));
+
+        volver.setBackground(new java.awt.Color(204, 204, 204));
+        volver.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        volver.setText("<-- Volver al menú");
+        volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                volverActionPerformed(evt);
+            }
+        });
+        jPanel2.add(volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 370, -1, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 400));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 400));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void inputTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputTituloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inputTituloActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        dispose();
+    }//GEN-LAST:event_exitActionPerformed
+
+    private void verDescendenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verDescendenciaActionPerformed
+        String indiceStr = inputIndice.getText();
+        if (validar.convertirNumero(indiceStr) != -1) {
+            int index = validar.convertirNumero(indiceStr);
+            if (validar.validarIndice(resultados.length, index)) {
+               JOptionPane.showMessageDialog(null, resultados[index].toString());
+            } else {
+                JOptionPane.showMessageDialog(null, "Indice Invalido");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe ser un numero entero");
+        }
+        inputIndice.setText("");
+    }//GEN-LAST:event_verDescendenciaActionPerformed
+
+    private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
+        String nombreBusq = inputTitulo.getText();
+        resultados = gestionApp.buscarTitulo(nombreBusq);
+        if (resultados != null) {
+            resultadoStr.setText(gestionApp.mostrarBusquedaTitulo(resultados));
+        } else {
+            resultadoStr.setText("");
+            JOptionPane.showMessageDialog(null, "No se encontraron coincidencias con la busqueda.");
+        }
+    }//GEN-LAST:event_buscarActionPerformed
+
+    private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
+        Menu menu = new Menu();
+    }//GEN-LAST:event_volverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -77,6 +216,18 @@ public class BuscarPorTitulo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buscar;
+    private javax.swing.JButton exit;
+    private javax.swing.JTextField inputIndice;
+    private javax.swing.JTextField inputTitulo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea resultadoStr;
+    private javax.swing.JButton verDescendencia;
+    private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables
 }

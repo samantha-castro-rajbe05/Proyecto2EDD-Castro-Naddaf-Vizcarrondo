@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Interfaces;
-
+import Funciones.MostrarArbol;
+import Interfaces.BuscarPorNombre;
+import static Interfaces.Welcome.gestionApp;
 /**
  *
  * @author samantha
@@ -33,7 +35,6 @@ public class Menu extends javax.swing.JFrame {
         exit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         buscarPorNombre = new javax.swing.JButton();
-        buscarPorMote = new javax.swing.JButton();
         buscarPorTitulo = new javax.swing.JButton();
         cargarArchivo = new javax.swing.JButton();
         mostrarArbol = new javax.swing.JButton();
@@ -70,17 +71,7 @@ public class Menu extends javax.swing.JFrame {
                 buscarPorNombreActionPerformed(evt);
             }
         });
-        jPanel1.add(buscarPorNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 120, -1, -1));
-
-        buscarPorMote.setBackground(new java.awt.Color(204, 204, 204));
-        buscarPorMote.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
-        buscarPorMote.setText("Buscar por mote");
-        buscarPorMote.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buscarPorMoteActionPerformed(evt);
-            }
-        });
-        jPanel1.add(buscarPorMote, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, -1, -1));
+        jPanel1.add(buscarPorNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, -1, -1));
 
         buscarPorTitulo.setBackground(new java.awt.Color(204, 204, 204));
         buscarPorTitulo.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
@@ -90,7 +81,7 @@ public class Menu extends javax.swing.JFrame {
                 buscarPorTituloActionPerformed(evt);
             }
         });
-        jPanel1.add(buscarPorTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, -1, -1));
+        jPanel1.add(buscarPorTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, -1, -1));
 
         cargarArchivo.setBackground(new java.awt.Color(204, 204, 204));
         cargarArchivo.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
@@ -151,7 +142,10 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_buscarPorNombreActionPerformed
 
     private void mostrarArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarArbolActionPerformed
-        // TODO add your handling code here:
+        System.setProperty("org.graphstream.ui", "swing");
+        MostrarArbol verArbol = new MostrarArbol(gestionApp.getArbolFamiliar());
+        verArbol.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_mostrarArbolActionPerformed
 
     private void mostrarAntepasadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarAntepasadosActionPerformed
@@ -160,7 +154,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_mostrarAntepasadosActionPerformed
 
     private void listaGeneracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaGeneracionActionPerformed
-        Contemporaneos contemporaneos = new Contemporaneos();
+        Generacion contemporaneos = new Generacion();
         this.dispose();
     }//GEN-LAST:event_listaGeneracionActionPerformed
 
@@ -176,11 +170,6 @@ public class Menu extends javax.swing.JFrame {
         BuscarPorTitulo buscarPorTitulo = new BuscarPorTitulo();
         this.dispose();
     }//GEN-LAST:event_buscarPorTituloActionPerformed
-
-    private void buscarPorMoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarPorMoteActionPerformed
-        BuscarPorMote buscarPorMote = new BuscarPorMote();
-        this.dispose();
-    }//GEN-LAST:event_buscarPorMoteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -218,7 +207,6 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buscarPorMote;
     private javax.swing.JButton buscarPorNombre;
     private javax.swing.JButton buscarPorTitulo;
     private javax.swing.JButton cargarArchivo;

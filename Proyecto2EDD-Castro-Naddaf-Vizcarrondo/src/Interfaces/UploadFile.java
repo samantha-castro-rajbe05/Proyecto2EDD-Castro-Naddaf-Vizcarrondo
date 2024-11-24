@@ -5,10 +5,9 @@
 package Interfaces;
 
 import EDD.Arbol;
-import Functions.Cargar;
-import Functions.Linaje;
+
 import Interfaces.Menu;
-import Persona.Persona;
+import Principal.Persona;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -176,7 +175,7 @@ public class UploadFile extends javax.swing.JFrame {
 //            String linaje = func.getNombreLinaje();
 //
 //            // Imprimimos el linaje
-//            JOptionPane.showMessageDialog(null, linaje);
+//            JOptionPane.showMessageDialog(null, linaje.toString());
 //            Menu menu = new Menu();
 //            this.dispose();
 //
@@ -186,27 +185,6 @@ public class UploadFile extends javax.swing.JFrame {
 
 
 
-        // Dentro del ActionListener del botón "Cargar"
-JFileChooser fileChooser = new JFileChooser();
-int seleccion = fileChooser.showOpenDialog(null);
-if (seleccion == JFileChooser.APPROVE_OPTION) {
-    File archivoSeleccionado = fileChooser.getSelectedFile();
-    String rutaArchivo = archivoSeleccionado.getAbsolutePath();
-
-    // Crear instancia del gestor y cargar el archivo
-    Cargar gestor = new Cargar();
-    gestor.cargar(rutaArchivo);
-
-    // Obtener el árbol genealógico y el nombre del linaje
-    Arbol<Persona> arbol = gestor.getArbolGenealogico();
-    String nombreLinaje = gestor.getNombreLinaje();
-
-    // Mostrar el nombre del linaje en la interfaz
-    lblNombreLinaje.setNombreLinaje(nombreLinaje);//no entiendo esto
-    JOptionPane.showMessageDialog(null, nombreLinaje);
-
-    // Aquí puedes continuar con la visualización del árbol o cualquier otra funcionalidad
-}
 
     }//GEN-LAST:event_cargarArchivoActionPerformed
 
