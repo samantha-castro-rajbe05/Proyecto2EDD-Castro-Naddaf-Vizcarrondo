@@ -17,7 +17,7 @@ public class Arbol {
     private NodoA raiz; // Nodo raíz del árbol
 
     /**
-     * Constructor por defecto. Inicializa el árbol vacío.
+     * Constructor por defecto. Inicializa el árbol vacío. 
      */
     public Arbol() {
         this.raiz = null;
@@ -41,7 +41,7 @@ public class Arbol {
     }
 
     /**
-     * Verifica si el árbol está vacío.
+     * Comprueba si el árbol está vacío.
      * 
      * @return true si no hay nodos en el árbol, false en caso contrario
      */
