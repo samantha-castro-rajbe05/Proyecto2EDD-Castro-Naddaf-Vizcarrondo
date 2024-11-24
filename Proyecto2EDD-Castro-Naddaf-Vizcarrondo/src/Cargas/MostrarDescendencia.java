@@ -6,7 +6,7 @@ package Functions;
 
 import EDD.Arbol;
 import EDD.NodoA;
-import Interfaces.BuscarNombre;
+import Interfaces.BuscarPorNombre;
 import Principal.Persona;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
@@ -29,10 +29,10 @@ public class MostrarDescendencia extends JFrame{
     private Arbol arbol; 
     private Viewer visor;
     private ViewPanel panelVista;
-    private BuscarNombre buscarNombre;
+    private BuscarPorNombre buscarNombre;
 
     
-    public MostrarDescendencia(Arbol arbol, BuscarNombre buscarNombre) {
+    public MostrarDescendencia(Arbol arbol, BuscarPorNombre buscarNombre) {
         this.arbol = arbol;
         this.buscarNombre = buscarNombre;
         buscarNombre.setVisible(false);
