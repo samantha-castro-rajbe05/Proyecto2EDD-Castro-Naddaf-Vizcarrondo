@@ -160,8 +160,6 @@ public class BuscarPorNombre extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No se encontraron coincidencias con la busqueda.");
         }
         
-         
-        
     }//GEN-LAST:event_buscarNombreActionPerformed
 
     private void verDescendenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verDescendenciaActionPerformed
