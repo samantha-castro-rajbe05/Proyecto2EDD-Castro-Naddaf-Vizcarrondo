@@ -5,11 +5,12 @@
 package Funciones;
 
 import EDD.Arbol;
+import javax.swing.JFrame;
 
 /**
  *
  * @author samantha
  */
-public class MostrarDescendencia {
+public class MostrarDescendencia extends JFrame {
     private Arbol arbol; 
 }

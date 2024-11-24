@@ -152,33 +152,33 @@ public class BuscarPorNombre extends javax.swing.JFrame {
         resultados = gestionApp.buscarNombre(nombreBusq);
         if (resultados != null) {
             
-            resultadoStr.setText(gestionApp.mostrarBusquedaNombre(resultados));
+           // resultadoStr.setText(gestionApp.mostrarBusquedaNombre(resultados));
         } else {
-            resultadoStr.setText("");
+           // resultadoStr.setText("");
             JOptionPane.showMessageDialog(null, "No se encontraron coincidencias con la busqueda.");
         }
         
-    }     
+         
         
     }//GEN-LAST:event_buscarNombreActionPerformed
 
     private void mostrarArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarArbolActionPerformed
-        String indiceStr = inputIndice.getText();
-        if (validar.convertirNumero(indiceStr) != -1) {
-            int index = validar.convertirNumero(indiceStr);
-            if (validar.validarIndice(resultados.length, index)) {
-                System.setProperty("org.graphstream.ui", "swing");
-                
-                MostrarDescendencia verArbol = new MostrarDescendencia(gestionApp.descendencia(resultados[index]), this);
-                verArbol.setVisible(true);
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Indice Invalido");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe ser un numero entero");
-        }
-        inputIndice.setText("");
+//        String indiceStr = inputIndice.getText();
+//        if (validar.convertirNumero(indiceStr) != -1) {
+//            int index = validar.convertirNumero(indiceStr);
+//            if (validar.validarIndice(resultados.length, index)) {
+//                System.setProperty("org.graphstream.ui", "swing");
+//                
+//                MostrarDescendencia verArbol = new MostrarDescendencia(gestionApp.descendencia(resultados[index]), this);
+//                verArbol.setVisible(true);
+//
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Indice Invalido");
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Debe ser un numero entero");
+//        }
+//        inputIndice.setText("");
     }//GEN-LAST:event_mostrarArbolActionPerformed
 
     /**

@@ -16,8 +16,6 @@ import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.ui.swing_viewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
 
-
-
 /**
  *
  * @author samantha y peter
