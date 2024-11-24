@@ -4,8 +4,12 @@
  */
 package Interfaces;
 
-import EDD.HashTable;
-import Functions.Cargar;
+
+import Interfaces.Menu;
+import static Interfaces.Welcome.gestionApp;
+import static Interfaces.Welcome.validar;
+import Principal.Persona;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,9 +17,8 @@ import Functions.Cargar;
  */
 public class BuscarPorNombre extends javax.swing.JFrame {
 
-    /**
-     * Creates new form BuscarPorNombre
-     */
+    private Persona[] resultados;
+
     public BuscarPorNombre() {
         initComponents();
         this.setVisible(true);
@@ -39,7 +42,7 @@ public class BuscarPorNombre extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         mostrarNombres = new javax.swing.JTextArea();
-        inputNum = new javax.swing.JTextField();
+        inputIndice = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         mostrarArbol = new javax.swing.JButton();
         buscarNombre = new javax.swing.JButton();
@@ -77,7 +80,7 @@ public class BuscarPorNombre extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Palatino", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel2.setText("Ingresa el número del personaje deseado:");
+        jLabel2.setText("Ingrese el indice de la persona para mostrar la descendencia:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, -1, -1));
 
         mostrarNombres.setBackground(new java.awt.Color(204, 204, 204));
@@ -88,9 +91,9 @@ public class BuscarPorNombre extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 270, 140));
 
-        inputNum.setBackground(new java.awt.Color(204, 204, 204));
-        inputNum.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
-        jPanel1.add(inputNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, -1, -1));
+        inputIndice.setBackground(new java.awt.Color(204, 204, 204));
+        inputIndice.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        jPanel1.add(inputIndice, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 130, -1));
 
         jLabel3.setFont(new java.awt.Font("Palatino", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(204, 204, 204));
@@ -99,8 +102,13 @@ public class BuscarPorNombre extends javax.swing.JFrame {
 
         mostrarArbol.setBackground(new java.awt.Color(204, 204, 204));
         mostrarArbol.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
-        mostrarArbol.setText("Mostrar información");
-        jPanel1.add(mostrarArbol, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, -1, -1));
+        mostrarArbol.setText("Ver descendencia");
+        mostrarArbol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarArbolActionPerformed(evt);
+            }
+        });
+        jPanel1.add(mostrarArbol, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, -1, -1));
 
         buscarNombre.setBackground(new java.awt.Color(204, 204, 204));
         buscarNombre.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
@@ -120,7 +128,7 @@ public class BuscarPorNombre extends javax.swing.JFrame {
                 volverActionPerformed(evt);
             }
         });
-        jPanel1.add(volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 360, -1, -1));
+        jPanel1.add(volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 370, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 400));
 
@@ -140,10 +148,38 @@ public class BuscarPorNombre extends javax.swing.JFrame {
     }//GEN-LAST:event_inputNombreActionPerformed
 
     private void buscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarNombreActionPerformed
-       Cargar cargar = new Cargar();
-       System.out.println(cargar.getTablaPersonas()); //PROBARRRR
+       String nombreBusq = inputNombre.getText();
+        resultados = gestionApp.buscarNombre(nombreBusq);
+        if (resultados != null) {
+            
+            resultadoStr.setText(gestionApp.mostrarBusquedaNombre(resultados));
+        } else {
+            resultadoStr.setText("");
+            JOptionPane.showMessageDialog(null, "No se encontraron coincidencias con la busqueda.");
+        }
+        
+    }     
         
     }//GEN-LAST:event_buscarNombreActionPerformed
+
+    private void mostrarArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarArbolActionPerformed
+        String indiceStr = inputIndice.getText();
+        if (validar.convertirNumero(indiceStr) != -1) {
+            int index = validar.convertirNumero(indiceStr);
+            if (validar.validarIndice(resultados.length, index)) {
+                System.setProperty("org.graphstream.ui", "swing");
+                
+                MostrarDescendencia verArbol = new MostrarDescendencia(gestionApp.descendencia(resultados[index]), this);
+                verArbol.setVisible(true);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Indice Invalido");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe ser un numero entero");
+        }
+        inputIndice.setText("");
+    }//GEN-LAST:event_mostrarArbolActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,8 +219,8 @@ public class BuscarPorNombre extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buscarNombre;
     private javax.swing.JButton exit;
+    private javax.swing.JTextField inputIndice;
     private javax.swing.JTextField inputNombre;
-    private javax.swing.JTextField inputNum;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
