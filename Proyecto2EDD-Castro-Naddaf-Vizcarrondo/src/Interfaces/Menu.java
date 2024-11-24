@@ -149,7 +149,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_mostrarArbolActionPerformed
 
     private void mostrarAntepasadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarAntepasadosActionPerformed
-        MostrarAntepasados mostrarAntepasados = new MostrarAntepasados();
+        Antepasados mostrarAntepasados = new Antepasados();
         this.dispose();
     }//GEN-LAST:event_mostrarAntepasadosActionPerformed
 
