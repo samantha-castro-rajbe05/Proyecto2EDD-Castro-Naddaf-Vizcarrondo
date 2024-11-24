@@ -46,7 +46,7 @@ public class BuscarPorNombre extends javax.swing.JFrame {
         mostrarNombres = new javax.swing.JTextArea();
         inputIndice = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        mostrarArbol = new javax.swing.JButton();
+        verDescendencia = new javax.swing.JButton();
         buscarNombre = new javax.swing.JButton();
         volver = new javax.swing.JButton();
 
@@ -102,15 +102,15 @@ public class BuscarPorNombre extends javax.swing.JFrame {
         jLabel3.setText("Ingresa el nombre que quieres buscar:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
 
-        mostrarArbol.setBackground(new java.awt.Color(204, 204, 204));
-        mostrarArbol.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
-        mostrarArbol.setText("Ver descendencia");
-        mostrarArbol.addActionListener(new java.awt.event.ActionListener() {
+        verDescendencia.setBackground(new java.awt.Color(204, 204, 204));
+        verDescendencia.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
+        verDescendencia.setText("Ver descendencia");
+        verDescendencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mostrarArbolActionPerformed(evt);
+                verDescendenciaActionPerformed(evt);
             }
         });
-        jPanel1.add(mostrarArbol, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, -1, -1));
+        jPanel1.add(verDescendencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, -1, -1));
 
         buscarNombre.setBackground(new java.awt.Color(204, 204, 204));
         buscarNombre.setFont(new java.awt.Font("Palatino", 0, 13)); // NOI18N
@@ -164,7 +164,7 @@ public class BuscarPorNombre extends javax.swing.JFrame {
         
     }//GEN-LAST:event_buscarNombreActionPerformed
 
-    private void mostrarArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarArbolActionPerformed
+    private void verDescendenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verDescendenciaActionPerformed
         String indiceStr = inputIndice.getText();
         if (validar.convertirNumero(indiceStr) != -1) {
             int index = validar.convertirNumero(indiceStr);
@@ -181,7 +181,7 @@ public class BuscarPorNombre extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe ser un numero entero");
         }
         inputIndice.setText("");
-    }//GEN-LAST:event_mostrarArbolActionPerformed
+    }//GEN-LAST:event_verDescendenciaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,8 +228,8 @@ public class BuscarPorNombre extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton mostrarArbol;
     private javax.swing.JTextArea mostrarNombres;
+    private javax.swing.JButton verDescendencia;
     private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables
 }
