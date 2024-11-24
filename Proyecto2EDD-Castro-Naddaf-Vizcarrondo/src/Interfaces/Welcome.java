@@ -4,12 +4,18 @@
  */
 package Interfaces;
 
+import Funciones.Validar;
+import Principal.App;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author samantha
  */
 public class Welcome extends javax.swing.JFrame {
 
+    public static App gestionApp = new App();
+    public static Validar validar = new Validar();
     /**
      * Creates new form Welcome
      */
@@ -81,7 +87,8 @@ public class Welcome extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
-        UploadFile uploadFile = new UploadFile();
+       UploadFile cargar = new UploadFile();               
+        
         this.dispose(); 
     }//GEN-LAST:event_startActionPerformed
 
